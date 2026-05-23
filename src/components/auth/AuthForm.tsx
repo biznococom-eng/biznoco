@@ -64,13 +64,24 @@ export function AuthForm({ mode }: AuthFormProps) {
     }
     setStatus("loading");
     setErrorMsg(null);
+
+    // Safety timeout — nếu request hang > 20s, reset state để user thử lại
+    const timeoutId = window.setTimeout(() => {
+      setStatus("error");
+      setErrorMsg(
+        "Yêu cầu mất quá lâu (>20s). Kiểm tra kết nối mạng hoặc thử lại.",
+      );
+    }, 20_000);
+
     try {
       const sb = getSupabase();
       if (isLogin) {
         const { error } = await sb.auth.signInWithPassword({ email, password });
+        window.clearTimeout(timeoutId);
         if (error) throw error;
-        router.push(next);
-        router.refresh();
+        // Full reload (KHÔNG dùng router.push) để middleware đọc cookie session mới
+        // và redirect đúng (vd: /activate nếu chưa activate).
+        window.location.assign(next);
       } else {
         const { data, error } = await sb.auth.signUp({
           email,
@@ -79,17 +90,16 @@ export function AuthForm({ mode }: AuthFormProps) {
             emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
           },
         });
+        window.clearTimeout(timeoutId);
         if (error) throw error;
-        // Khi project Supabase BẬT email confirmation (mặc định) → user.confirmed_at = null,
-        // cần xác nhận email trước khi login. Khi TẮT → có session ngay.
         if (data.session) {
-          router.push(next);
-          router.refresh();
+          window.location.assign(next);
         } else {
           setStatus("verify-email");
         }
       }
     } catch (err) {
+      window.clearTimeout(timeoutId);
       setStatus("error");
       const raw = err instanceof Error ? err.message : String(err);
       setErrorMsg(translateError(raw));

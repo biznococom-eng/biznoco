@@ -47,7 +47,8 @@ export async function fetchCreativeAggregates(
   const sb = getSupabase();
   const { accountId, from, to, search } = params;
 
-  const builder = sb.rpc("get_creative_summary", {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const builder = (sb.rpc as any)("get_creative_summary", {
     p_account_id: accountId,
     p_start_date: from,
     p_end_date: to,

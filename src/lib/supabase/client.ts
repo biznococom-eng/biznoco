@@ -1,37 +1,40 @@
 "use client";
 
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "./types";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 /**
- * `true` when both env vars are set. UI uses this to decide between
- * live Supabase mode and offline mock-data mode.
+ * `true` when both env vars are set. UI dùng flag này để chuyển giữa
+ * live Supabase mode và offline mock-data mode.
  */
 export const isSupabaseConfigured =
   Boolean(SUPABASE_URL) && Boolean(SUPABASE_ANON_KEY);
 
-let cached: SupabaseClient | null = null;
+let cached: SupabaseClient<Database> | null = null;
 
 /**
- * Lazy singleton — throws a clear error if env vars are missing
- * AND code paths that need Supabase try to use it.
+ * Lazy singleton Supabase **browser** client.
  *
- * Note: dùng untyped client; type assertion ở từng service function
- * (xem `src/services/creativeService.ts`). Để generated types: chạy
- * `supabase gen types typescript --project-id <ref>` rồi bật `<Database>` generic.
+ * QUAN TRỌNG: dùng `createBrowserClient` từ `@supabase/ssr` (KHÔNG phải
+ * `createClient` từ `@supabase/supabase-js`) để session được lưu vào
+ * **cookies**. Nhờ vậy server-side middleware + Server Components đọc được
+ * cùng session — middleware mới chuyển hướng đúng sau khi đăng nhập.
+ *
+ * Nếu dùng `createClient` (mặc định lưu localStorage), browser client thấy
+ * user signed-in nhưng middleware đọc cookies thì thấy null → redirect loop
+ * → button "Đang đăng nhập…" xoay vô tận.
  */
-export function getSupabase(): SupabaseClient {
+export function getSupabase(): SupabaseClient<Database> {
   if (cached) return cached;
   if (!isSupabaseConfigured) {
     throw new Error(
       "Supabase chưa được cấu hình. Hãy thêm NEXT_PUBLIC_SUPABASE_URL và NEXT_PUBLIC_SUPABASE_ANON_KEY vào .env.local rồi restart dev server.",
     );
   }
-  cached = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
-    db: { schema: "public" },
-  });
+  cached = createBrowserClient<Database>(SUPABASE_URL!, SUPABASE_ANON_KEY!);
   return cached;
 }
