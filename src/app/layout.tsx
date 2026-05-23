@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
 
 export const metadata: Metadata = {
-  title: "Biznoco — AI Marketing Suite",
+  title: {
+    default: "Biznoco — Creative Analytics cho Facebook Ads",
+    template: "%s · Biznoco",
+  },
   description:
-    "Biznoco: bao cao Facebook Ads, trich xuat dataset, chatbot AI ban hang. Cong cu Marketing AI cho doanh nghiep Viet.",
+    "Phân tích Hook Rate, Hold Rate, ROAS theo từng creative Facebook Ads. SaaS dành cho marketer & chủ doanh nghiệp Việt.",
+  openGraph: {
+    title: "Biznoco — Creative Analytics cho Facebook Ads",
+    description:
+      "Hook Rate, Hold Rate, ROAS — biết ngay creative nào đáng scale.",
+    locale: "vi_VN",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -23,12 +32,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         />
       </head>
-      <body>
-        <div className="shell">
-          <Sidebar />
-          <main className="main">{children}</main>
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
