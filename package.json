@@ -1,0 +1,22 @@
+{
+  "name": "biznoco",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Biznoco — AI Marketing Suite: bao cao Facebook Ads, trich xuat dataset, chatbot ban hang",
+  "scripts": {
+    "dev": "next dev -p 3035",
+    "build": "next build",
+    "start": "next start -p 3035"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}
