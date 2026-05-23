@@ -7,6 +7,5 @@ export const metadata = {
 };
 
 export default function CreativesPage() {
-  const accountId = process.env.NEXT_PUBLIC_DEMO_ACCOUNT_ID;
-  return <CreativesContainer accountId={accountId} />;
+  return <CreativesContainer />;
 }

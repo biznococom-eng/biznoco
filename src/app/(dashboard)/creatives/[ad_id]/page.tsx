@@ -1,4 +1,4 @@
-import { CreativeDetailContainer } from "@/components/creatives/CreativeDetailContainer";
+import { CreativeDetailWrapper } from "@/components/creatives/CreativeDetailWrapper";
 
 export const metadata = {
   title: "Chi tiết creative · Biznoco",
@@ -10,6 +10,5 @@ interface PageProps {
 
 export default async function CreativeDetailPage({ params }: PageProps) {
   const { ad_id } = await params;
-  const accountId = process.env.NEXT_PUBLIC_DEMO_ACCOUNT_ID;
-  return <CreativeDetailContainer accountId={accountId} adId={ad_id} />;
+  return <CreativeDetailWrapper adId={ad_id} />;
 }
