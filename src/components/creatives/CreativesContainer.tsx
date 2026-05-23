@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import type { DateRange } from "react-day-picker";
-import { Database, ServerOff } from "lucide-react";
+import { Sparkles, Database, Link2 } from "lucide-react";
 
 import { useCreatives } from "@/hooks/useCreatives";
 import {
@@ -23,6 +24,7 @@ import {
 } from "@/components/creatives/CreativesSkeleton";
 import { CreativesErrorState } from "@/components/creatives/CreativesErrorState";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface CreativesContainerProps {
   accountId?: string;
@@ -92,12 +94,12 @@ export function CreativesContainer({
               Creative Analytics
             </h1>
             {useMock ? (
-              <Badge variant="warning" className="gap-1">
-                <ServerOff className="h-3 w-3" /> Mock mode
+              <Badge variant="default" className="gap-1 bg-primary/15 text-primary">
+                <Sparkles className="h-3 w-3" /> Dữ liệu demo
               </Badge>
             ) : (
               <Badge variant="default" className="gap-1 bg-success/15 text-success">
-                <Database className="h-3 w-3" /> Live · Supabase
+                <Database className="h-3 w-3" /> Đang kết nối
               </Badge>
             )}
             {isFetching && !isLoading && (
@@ -108,10 +110,18 @@ export function CreativesContainer({
           </div>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             {useMock
-              ? "Hiển thị mock data — thêm NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY vào .env.local để fetch từ Supabase thật."
-              : "Dữ liệu fetch trực tiếp từ Supabase: aggregation qua RPC get_creative_summary, overview qua bảng creative_stats."}
+              ? "Đang xem dữ liệu demo từ 12 chiến dịch mẫu. Kết nối Facebook Ad Account để phân tích dữ liệu thực của bạn."
+              : "Phân tích hiệu suất video & hình ảnh quảng cáo Facebook Ads theo thời gian thực."}
           </p>
         </div>
+        {useMock && (
+          <Button asChild>
+            <Link href="/accounts">
+              <Link2 className="h-4 w-4" />
+              Kết nối Ad Account
+            </Link>
+          </Button>
+        )}
       </header>
 
       {error ? (
