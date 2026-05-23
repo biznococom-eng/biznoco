@@ -49,6 +49,7 @@ export default function AuthLayout({
             <li>✓ Retention curve cho mỗi video creative</li>
             <li>✓ Cảnh báo creative giảm hiệu suất real-time</li>
             <li>✓ Phân tích đa tài khoản (Multi-account)</li>
+            <li>✓ Mã hoá end-to-end · SOC 2 ready</li>
           </ul>
         </div>
       </div>
