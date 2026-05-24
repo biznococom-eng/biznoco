@@ -1,8 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, AlertCircle, Wallet2, X } from "lucide-react";
+import {
+  Loader2,
+  AlertCircle,
+  Wallet2,
+  X,
+  Key,
+  Eye,
+  EyeOff,
+  CheckCircle2,
+  ExternalLink,
+} from "lucide-react";
 import { createAccount } from "@/services/accountsService";
+import { validateToken, listAdAccounts } from "@/services/metaApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,10 +28,37 @@ export function AddAccountDialog({ open, onClose, onCreated }: AddAccountDialogP
   const [fbId, setFbId] = useState("");
   const [name, setName] = useState("");
   const [currency, setCurrency] = useState("VND");
+  const [metaToken, setMetaToken] = useState("");
+  const [showToken, setShowToken] = useState(false);
+  const [tokenStatus, setTokenStatus] = useState<
+    | { kind: "idle" }
+    | { kind: "checking" }
+    | { kind: "ok"; name: string; adAccountsCount: number }
+    | { kind: "err"; msg: string }
+  >({ kind: "idle" });
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
   if (!open) return null;
+
+  async function checkToken() {
+    if (!metaToken.trim()) return;
+    setTokenStatus({ kind: "checking" });
+    try {
+      const info = await validateToken(metaToken.trim());
+      const accs = await listAdAccounts(metaToken.trim());
+      setTokenStatus({ kind: "ok", name: info.name, adAccountsCount: accs.length });
+      // Auto-fill từ ad account đầu tiên nếu user chưa nhập
+      if (accs.length > 0 && !fbId) {
+        setFbId(accs[0].id);
+      }
+      if (accs.length > 0 && !name) {
+        setName(accs[0].name);
+      }
+    } catch (e) {
+      setTokenStatus({ kind: "err", msg: e instanceof Error ? e.message : String(e) });
+    }
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -69,19 +107,89 @@ export function AddAccountDialog({ open, onClose, onCreated }: AddAccountDialogP
           </div>
 
           <form onSubmit={submit} className="space-y-3">
+            {/* META TOKEN — bước 1 */}
+            <div className="rounded-lg border border-primary/30 bg-primary/5 p-3">
+              <div className="mb-1.5 flex items-center justify-between">
+                <label className="block text-xs font-semibold uppercase tracking-wide text-primary">
+                  ⚡ Meta API Access Token
+                </label>
+                <a
+                  href="https://developers.facebook.com/tools/explorer/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline"
+                >
+                  Lấy token <ExternalLink className="h-2.5 w-2.5" />
+                </a>
+              </div>
+              <div className="relative">
+                <Key className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type={showToken ? "text" : "password"}
+                  placeholder="EAAxxx... (long-lived access token)"
+                  value={metaToken}
+                  onChange={(e) => {
+                    setMetaToken(e.target.value);
+                    setTokenStatus({ kind: "idle" });
+                  }}
+                  onBlur={checkToken}
+                  disabled={busy}
+                  className="pl-9 pr-20 text-xs"
+                />
+                <div className="absolute right-1 top-1/2 flex -translate-y-1/2 gap-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setShowToken((v) => !v)}
+                    tabIndex={-1}
+                    className="grid h-7 w-7 place-items-center rounded text-muted-foreground hover:bg-accent/40"
+                  >
+                    {showToken ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={checkToken}
+                    disabled={!metaToken.trim() || tokenStatus.kind === "checking"}
+                    className="rounded bg-primary px-2 py-1 text-[10px] font-bold text-primary-foreground hover:brightness-110 disabled:opacity-50"
+                  >
+                    {tokenStatus.kind === "checking" ? (
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                    ) : (
+                      "Test"
+                    )}
+                  </button>
+                </div>
+              </div>
+              {tokenStatus.kind === "ok" && (
+                <div className="mt-2 flex items-center gap-1.5 rounded bg-success/15 px-2 py-1 text-[11px] text-success">
+                  <CheckCircle2 className="h-3 w-3" />
+                  Token valid · {tokenStatus.name} · {tokenStatus.adAccountsCount} ad accounts
+                </div>
+              )}
+              {tokenStatus.kind === "err" && (
+                <div className="mt-2 flex items-start gap-1.5 rounded bg-destructive/15 px-2 py-1 text-[11px] text-destructive">
+                  <AlertCircle className="mt-0.5 h-3 w-3 shrink-0" />
+                  <span>{tokenStatus.msg}</span>
+                </div>
+              )}
+              <p className="mt-1.5 text-[10px] text-muted-foreground">
+                Scopes cần: <code>ads_read</code>, <code>business_management</code>,{" "}
+                <code>read_insights</code>. Token lưu local, không gửi đến server biznoco.
+              </p>
+            </div>
+
             <div>
               <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Ad Account ID *
               </label>
               <Input
-                placeholder="1234567890 hoặc act_1234567890"
+                placeholder="act_1234567890"
                 value={fbId}
                 onChange={(e) => setFbId(e.target.value)}
                 disabled={busy}
                 required
               />
               <p className="mt-1 text-[11px] text-muted-foreground">
-                Lấy tại Facebook Ads Manager → Account Overview → Account ID
+                Auto-fill khi Test token thành công, hoặc lấy tại Ads Manager → Account ID
               </p>
             </div>
             <div>
