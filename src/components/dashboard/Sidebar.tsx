@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutGrid,
+  Megaphone,
   Wallet2,
   Settings2,
   type LucideIcon,
@@ -17,6 +18,7 @@ interface NavItem {
 }
 
 const MAIN: NavItem[] = [
+  { href: "/campaigns", label: "Chiến dịch", icon: Megaphone },
   { href: "/creatives", label: "Creative Analytics", icon: LayoutGrid },
 ];
 

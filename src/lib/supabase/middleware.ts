@@ -37,7 +37,9 @@ export async function updateSession(request: NextRequest) {
 
   const isActivateRoute = path.startsWith("/activate");
   const isProtectedRoute =
-    path.startsWith("/creatives") || path.startsWith("/accounts");
+    path.startsWith("/creatives") ||
+    path.startsWith("/campaigns") ||
+    path.startsWith("/accounts");
 
   // ── Chưa đăng nhập + truy cập route bảo vệ → /login ─────────────────────
   if (!user && (isProtectedRoute || isActivateRoute)) {
