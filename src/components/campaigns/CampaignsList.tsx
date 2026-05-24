@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import {
   Megaphone,
   ArrowRight,
@@ -9,6 +10,7 @@ import {
   AlertCircle,
   PlugZap,
   Sparkles,
+  Loader2,
 } from "lucide-react";
 import {
   MOCK_CAMPAIGNS_LIST,
@@ -16,15 +18,34 @@ import {
   type MockCampaign,
   type MockOverview,
 } from "@/mock/dilinh-campaign";
+import { useCampaigns } from "@/hooks/useCampaigns";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { fmtCompactVND, fmtCompact, fmtPct } from "@/lib/creative-aggregator";
 
 export function CampaignsList() {
-  // TODO: fetch real campaigns từ Supabase + Meta sync
-  const campaigns = MOCK_CAMPAIGNS_LIST;
-  const overviews = MOCK_CAMPAIGNS_OVERVIEW;
+  const { campaigns: liveCampaigns, isLoading } = useCampaigns(isSupabaseConfigured);
+
+  // Khi user có campaigns thật → dùng; nếu trống → fallback mock
+  const useMock = liveCampaigns.length === 0;
+  const campaigns = useMemo<MockCampaign[]>(() => {
+    if (useMock) return MOCK_CAMPAIGNS_LIST;
+    return liveCampaigns.map((c) => ({
+      id: c.id,
+      fb_campaign_id: c.fb_campaign_id,
+      name: c.name,
+      objective: c.objective ?? "—",
+      status: c.status,
+      effective_status: c.effective_status ?? c.status,
+      daily_budget: c.daily_budget ?? 0,
+      start_time: c.start_time ?? new Date().toISOString(),
+      stop_time: c.stop_time,
+    }));
+  }, [liveCampaigns, useMock]);
+
+  const overviews = MOCK_CAMPAIGNS_OVERVIEW; // TODO: fetch from get_campaign_overview RPC per campaign
 
   const activeCount = campaigns.filter((c) => c.effective_status === "ACTIVE").length;
   const totalSpend = Object.values(overviews).reduce((s, o) => s + o.total_spend, 0);
@@ -37,20 +58,32 @@ export function CampaignsList() {
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
               Chiến dịch Facebook Ads
             </h1>
-            <Badge variant="default" className="gap-1 bg-primary/15 text-primary">
-              <Sparkles className="h-3 w-3" /> Demo data
-            </Badge>
+            {isLoading ? (
+              <Badge variant="secondary" className="gap-1">
+                <Loader2 className="h-3 w-3 animate-spin" /> Đang tải…
+              </Badge>
+            ) : useMock ? (
+              <Badge variant="default" className="gap-1 bg-primary/15 text-primary">
+                <Sparkles className="h-3 w-3" /> Demo data
+              </Badge>
+            ) : (
+              <Badge variant="default" className="gap-1 bg-success/15 text-success">
+                <CheckCircle2 className="h-3 w-3" /> Live · {liveCampaigns.length} chiến dịch
+              </Badge>
+            )}
           </div>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             {campaigns.length} chiến dịch · {activeCount} đang chạy · tổng spend{" "}
-            <b>{fmtCompactVND(totalSpend)}</b>. Click vào 1 chiến dịch để xem báo cáo
-            chi tiết.
+            <b>{fmtCompactVND(totalSpend)}</b>.{" "}
+            {useMock
+              ? "Đang xem dữ liệu demo — kết nối Meta API để sync thật."
+              : "Click vào 1 chiến dịch để xem báo cáo chi tiết."}
           </p>
         </div>
         <Button asChild>
           <Link href="/accounts">
             <PlugZap className="h-4 w-4" />
-            Kết nối Meta API
+            {useMock ? "Kết nối Meta API" : "Quản lý accounts"}
           </Link>
         </Button>
       </header>

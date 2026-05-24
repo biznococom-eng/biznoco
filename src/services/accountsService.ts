@@ -17,6 +17,12 @@ export interface AdAccount {
   last_synced_at: string | null;
   created_at: string;
   updated_at: string;
+  // Meta API
+  access_token: string | null;
+  meta_business_id?: string | null;
+  meta_token_user_id?: string | null;
+  meta_token_scopes?: string[] | null;
+  meta_last_synced_at?: string | null;
 }
 
 export interface CreateAccountInput {
@@ -24,6 +30,9 @@ export interface CreateAccountInput {
   account_name: string;
   currency?: string;
   timezone_name?: string;
+  access_token?: string;
+  meta_token_user_id?: string;
+  meta_token_scopes?: string[];
 }
 
 /** List all ad accounts của user đang đăng nhập (RLS tự lọc theo auth.uid()) */
@@ -50,13 +59,16 @@ export async function createAccount(input: CreateAccountInput): Promise<AdAccoun
     ? input.fb_ad_account_id
     : `act_${input.fb_ad_account_id}`;
 
-  const insertPayload = {
+  const insertPayload: Record<string, unknown> = {
     user_id: user.id,
     fb_ad_account_id: normalizedFbId,
     account_name: input.account_name,
     currency: input.currency ?? "VND",
     timezone_name: input.timezone_name ?? "Asia/Ho_Chi_Minh",
   };
+  if (input.access_token) insertPayload.access_token = input.access_token;
+  if (input.meta_token_user_id) insertPayload.meta_token_user_id = input.meta_token_user_id;
+  if (input.meta_token_scopes) insertPayload.meta_token_scopes = input.meta_token_scopes;
   const { data, error } = await untyped(sb)
     .from("accounts")
     .insert(insertPayload)

@@ -13,7 +13,10 @@ import {
   CheckCircle2,
   Database,
   BookOpen,
+  RefreshCw,
+  Zap,
 } from "lucide-react";
+import { syncAccountFromMeta } from "@/services/campaignSyncService";
 import { useAccounts } from "@/hooks/useAccounts";
 import {
   deleteAccount,
@@ -124,9 +127,44 @@ function AccountCard({
   account: AdAccount;
   onChange: () => Promise<void>;
 }) {
-  const [busy, setBusy] = useState<"seed" | "clear" | "delete" | null>(null);
+  const [busy, setBusy] = useState<"seed" | "clear" | "delete" | "sync" | null>(null);
   const [msg, setMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
   const [statCount, setStatCount] = useState<number | null>(null);
+  const [syncProgress, setSyncProgress] = useState<string>("");
+
+  async function handleMetaSync() {
+    if (!account.access_token) {
+      setMsg({
+        kind: "err",
+        text: "Chưa có Meta token. Xoá account này + thêm lại với token để sync.",
+      });
+      return;
+    }
+    setBusy("sync");
+    setMsg(null);
+    setSyncProgress("Đang kết nối Meta API…");
+    try {
+      const r = await syncAccountFromMeta(
+        account.id,
+        account.fb_ad_account_id,
+        account.access_token,
+        {
+          onProgress: (p) => setSyncProgress(p.step + ` (${p.current}/${p.total})`),
+        },
+      );
+      const errMsg = r.errors.length > 0 ? ` · ${r.errors.length} lỗi` : "";
+      setMsg({
+        kind: r.campaigns_upserted > 0 ? "ok" : "err",
+        text: `Sync xong: ${r.campaigns_upserted} campaigns · ${r.daily_stats_upserted} daily rows · ${r.demographics_upserted} demo rows${errMsg}`,
+      });
+      await onChange();
+    } catch (e) {
+      setMsg({ kind: "err", text: e instanceof Error ? e.message : String(e) });
+    } finally {
+      setBusy(null);
+      setSyncProgress("");
+    }
+  }
 
   // Lazy load count on first render
   useState(() => {
@@ -254,11 +292,35 @@ function AccountCard({
           </div>
         )}
 
+        {busy === "sync" && syncProgress && (
+          <div className="flex items-start gap-2 rounded-md border border-primary/30 bg-primary/5 p-2 text-xs">
+            <Loader2 className="mt-0.5 h-3.5 w-3.5 shrink-0 animate-spin text-primary" />
+            <span className="break-words text-foreground/80">{syncProgress}</span>
+          </div>
+        )}
+
+        {account.access_token && (
+          <Button
+            size="sm"
+            variant="default"
+            onClick={handleMetaSync}
+            disabled={busy !== null}
+            className="w-full gap-2"
+          >
+            {busy === "sync" ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <Zap className="h-3.5 w-3.5" />
+            )}
+            Sync từ Meta Marketing API
+          </Button>
+        )}
+
         <div className="flex flex-wrap gap-2 border-t border-border/40 pt-3">
           <Button asChild size="sm" variant="outline" className="flex-1">
-            <Link href="/creatives">
+            <Link href="/campaigns">
               <ExternalLink className="h-3.5 w-3.5" />
-              Dashboard
+              Campaigns
             </Link>
           </Button>
           {statCount === 0 || statCount == null ? (

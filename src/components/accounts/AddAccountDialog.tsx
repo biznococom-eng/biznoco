@@ -69,11 +69,15 @@ export function AddAccountDialog({ open, onClose, onCreated }: AddAccountDialogP
         fb_ad_account_id: fbId.trim(),
         account_name: name.trim(),
         currency,
+        access_token: metaToken.trim() || undefined,
+        meta_token_user_id: tokenStatus.kind === "ok" ? undefined : undefined,
       });
       // Reset form
       setFbId("");
       setName("");
       setCurrency("VND");
+      setMetaToken("");
+      setTokenStatus({ kind: "idle" });
       onCreated();
       onClose();
     } catch (e) {
