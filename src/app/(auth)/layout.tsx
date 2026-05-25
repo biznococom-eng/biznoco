@@ -10,13 +10,12 @@ export default function AuthLayout({
       {/* Left: form */}
       <div className="flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
-          <Link href="/" className="mb-8 inline-flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 font-bold text-white shadow-lg shadow-violet-500/40">
-              B
-            </div>
-            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-lg font-extrabold tracking-tight text-transparent">
-              Biznoco
-            </span>
+          <Link href="/" className="mb-8 inline-flex items-center">
+            <img
+              src="https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"
+              alt="Biznoco"
+              className="h-9 w-auto"
+            />
           </Link>
           {children}
         </div>

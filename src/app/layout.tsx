@@ -8,12 +8,17 @@ export const metadata: Metadata = {
   },
   description:
     "Phân tích Hook Rate, Hold Rate, ROAS theo từng creative Facebook Ads. SaaS dành cho marketer & chủ doanh nghiệp Việt.",
+  icons: {
+    icon: "https://biznoco.com/wp-content/uploads/2026/04/Biznoco-1.png",
+    apple: "https://biznoco.com/wp-content/uploads/2026/04/Biznoco-1.png",
+  },
   openGraph: {
     title: "Biznoco — Creative Analytics cho Facebook Ads",
     description:
       "Hook Rate, Hold Rate, ROAS — biết ngay creative nào đáng scale.",
     locale: "vi_VN",
     type: "website",
+    images: ["https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"],
   },
 };
 

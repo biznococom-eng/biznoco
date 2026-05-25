@@ -33,18 +33,15 @@ export function Sidebar() {
 
   return (
     <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-border/60 bg-background/60 px-3 py-5 backdrop-blur-md md:flex">
-      <Link href="/" className="mb-6 inline-flex items-center gap-2 px-2">
-        <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 text-base font-bold text-white shadow-lg shadow-violet-500/40">
-          B
-        </div>
-        <div className="flex flex-col leading-none">
-          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-base font-extrabold tracking-tight text-transparent">
-            Biznoco
-          </span>
-          <span className="mt-0.5 text-[10px] uppercase tracking-wider text-muted-foreground">
-            Creative Analytics
-          </span>
-        </div>
+      <Link href="/" className="mb-6 flex flex-col gap-1 px-2">
+        <img
+          src="https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"
+          alt="Biznoco"
+          className="h-8 w-auto"
+        />
+        <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          Creative Analytics
+        </span>
       </Link>
 
       <SectionLabel>Dashboard</SectionLabel>

@@ -59,11 +59,12 @@ export function Topbar() {
         <button className="rounded-md border border-border/40 p-1.5">
           <Menu className="h-4 w-4" />
         </button>
-        <Link href="/" className="flex items-center gap-2">
-          <div className="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 text-xs font-bold text-white">
-            B
-          </div>
-          <span className="font-bold tracking-tight">Biznoco</span>
+        <Link href="/" className="flex items-center">
+          <img
+            src="https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"
+            alt="Biznoco"
+            className="h-7 w-auto"
+          />
         </Link>
       </div>
 
