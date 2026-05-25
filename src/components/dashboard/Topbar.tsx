@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LogOut, User, ChevronDown, Menu } from "lucide-react";
+import { LogOut, User, ChevronDown, Menu, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,15 +11,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { isAdminEmail } from "@/lib/admin";
+import { usePlan } from "@/hooks/usePlan";
+import { useMobileNav } from "./DashboardShell";
 
 interface UserMeta {
   email: string | null;
   full_name: string | null;
+  isAdmin?: boolean;
 }
 
 export function Topbar() {
   const [user, setUser] = useState<UserMeta | null>(null);
   const [loading, setLoading] = useState(true);
+  const { tier } = usePlan();
+  const { open: openMobileNav } = useMobileNav();
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -33,6 +39,7 @@ export function Topbar() {
           email: data.user.email ?? null,
           full_name:
             (data.user.user_metadata?.full_name as string | undefined) ?? null,
+          isAdmin: isAdminEmail(data.user.email),
         });
       }
       setLoading(false);
@@ -56,7 +63,11 @@ export function Topbar() {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border/60 bg-background/80 px-4 backdrop-blur-md md:px-6">
       <div className="flex items-center gap-3 md:hidden">
-        <button className="rounded-md border border-border/40 p-1.5">
+        <button
+          className="rounded-md border border-border/40 p-1.5 hover:bg-accent/40 transition-colors"
+          onClick={openMobileNav}
+          aria-label="Mở menu"
+        >
           <Menu className="h-4 w-4" />
         </button>
         <Link href="/" className="flex items-center">
@@ -100,11 +111,19 @@ export function Topbar() {
                   {user.full_name || "Người dùng"}
                 </div>
                 <div className="truncate text-muted-foreground">{user.email}</div>
+                <Link href="/pricing" className="mt-1.5 inline-flex items-center gap-1 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary hover:bg-primary/20">
+                  Gói {tier.toUpperCase()}
+                </Link>
               </div>
               <div className="my-1 h-px bg-border/60" />
               <PopoverItem href="/accounts" icon={User}>
                 Ad Accounts
               </PopoverItem>
+              {user.isAdmin && (
+                <PopoverItem href="/admin" icon={Shield}>
+                  Admin Panel
+                </PopoverItem>
+              )}
               <form action="/auth/signout" method="POST">
                 <button
                   type="submit"

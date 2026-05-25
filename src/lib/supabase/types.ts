@@ -15,7 +15,7 @@ export type Database = {
           full_name: string | null;
           company_name: string | null;
           avatar_url: string | null;
-          subscription_tier: "free" | "pro" | "enterprise";
+          subscription_tier: "free" | "base" | "ultra";
           created_at: string;
           updated_at: string;
         };

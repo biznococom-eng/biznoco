@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Topbar } from "@/components/dashboard/Topbar";
+import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import {
   getSupabaseServer,
   isSupabaseConfiguredServer,
@@ -44,13 +43,5 @@ export default async function DashboardLayout({
     }
   }
 
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="flex flex-1 flex-col">
-        <Topbar />
-        <main className="flex-1">{children}</main>
-      </div>
-    </div>
-  );
+  return <DashboardShell>{children}</DashboardShell>;
 }

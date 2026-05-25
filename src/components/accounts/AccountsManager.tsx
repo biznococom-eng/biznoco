@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Plus,
@@ -166,12 +166,11 @@ function AccountCard({
     }
   }
 
-  // Lazy load count on first render
-  useState(() => {
+  useEffect(() => {
     countCreativeStats(account.id)
       .then((n) => setStatCount(n))
       .catch(() => setStatCount(null));
-  });
+  }, [account.id]);
 
   async function handleSeed() {
     setBusy("seed");

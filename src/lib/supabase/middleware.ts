@@ -66,16 +66,22 @@ export async function updateSession(request: NextRequest) {
       .eq("id", user.id)
       .maybeSingle();
 
-    // Nếu cột chưa tồn tại trong DB (chưa chạy migration activation.sql)
-    // → log warning, không chặn — tránh khoá kẹt
-    const columnMissing =
-      error?.message?.toLowerCase().includes("column") &&
-      error?.message?.toLowerCase().includes("is_activated");
-
-    if (columnMissing) {
-      console.warn(
-        "[middleware] activation column missing — chạy db/activation.sql để kích hoạt gate",
-      );
+    // Bỏ qua activation gate nếu DB lỗi (bảng / cột chưa có)
+    // hoặc user chưa có profile row (migration chưa chạy) → tránh khoá kẹt
+    if (error) {
+      const isStructuralError =
+        error.message?.toLowerCase().includes("column") ||
+        error.message?.toLowerCase().includes("relation") ||
+        error.message?.toLowerCase().includes("does not exist") ||
+        error.message?.toLowerCase().includes("table");
+      if (isStructuralError) {
+        console.warn("[middleware] activation gate skipped — DB schema incomplete:", error.message);
+      }
+      // Với bất kỳ lỗi DB nào, bỏ qua activation check để tránh khoá user
+    } else if (profile === null) {
+      // User chưa có profile row (trigger handle_new_user chưa chạy schema.sql)
+      // → cho qua, không chặn
+      console.warn("[middleware] no profile row for user", user.id, "— skipping activation gate");
     } else {
       const isActivated = (profile as { is_activated?: boolean } | null)?.is_activated ?? false;
 

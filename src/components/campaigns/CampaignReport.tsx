@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Calendar, Activity, Sparkles } from "lucide-react";
+import { ArrowLeft, Calendar, Activity, Sparkles, FileDown, Lock } from "lucide-react";
 import {
   MOCK_DILINH_BUNDLE,
   MOCK_CAMPAIGNS_LIST,
@@ -19,6 +19,7 @@ import { CampaignGeoSection } from "./sections/CampaignGeoSection";
 import { CampaignDeviceSection } from "./sections/CampaignDeviceSection";
 import { CampaignFunnelSection } from "./sections/CampaignFunnelSection";
 import { CampaignRecommendationsSection } from "./sections/CampaignRecommendationsSection";
+import { usePlan } from "@/hooks/usePlan";
 
 interface Props {
   campaignId: string;
@@ -53,7 +54,7 @@ export function CampaignReport({ campaignId }: Props) {
     const overview = MOCK_CAMPAIGNS_OVERVIEW[campaignId];
     return (
       <div className="mx-auto w-full max-w-[1200px] px-4 py-6 md:px-8 md:py-10">
-        <BackLink />
+        <div className="mb-3"><BackLink /></div>
         <Card className="mt-4 overflow-hidden">
           <ReportCover campaign={campaign} />
         </Card>
@@ -91,13 +92,45 @@ export function CampaignReport({ campaignId }: Props) {
   return <FullReport bundle={MOCK_DILINH_BUNDLE} />;
 }
 
+function PdfExportButton({ hasPdf }: { hasPdf: boolean }) {
+  if (!hasPdf) {
+    return (
+      <Link href="/pricing">
+        <Button variant="outline" size="sm" className="gap-1.5 opacity-60" data-no-print>
+          <Lock className="h-3.5 w-3.5" />
+          Xuất PDF · BASE+
+        </Button>
+      </Link>
+    );
+  }
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      className="gap-1.5"
+      data-no-print
+      onClick={() => window.print()}
+    >
+      <FileDown className="h-3.5 w-3.5" />
+      Xuất PDF
+    </Button>
+  );
+}
+
 function FullReport({ bundle }: { bundle: MockCampaignBundle }) {
+  const { plan } = usePlan();
+  const hasAi = plan.ai;
+  const hasPdf = plan.pdf;
+
   return (
     <div className="mx-auto w-full max-w-[1400px] px-4 py-6 md:px-8 md:py-10">
-      <BackLink />
+      <div className="mb-3 flex items-center justify-between" data-no-print>
+        <BackLink />
+        <PdfExportButton hasPdf={hasPdf} />
+      </div>
 
       {/* ── Slide 1: Cover ────────────────────────────────────────────── */}
-      <div className="mt-4">
+      <div className="mt-2">
         <ReportCover campaign={bundle.campaign} />
       </div>
 
@@ -141,15 +174,34 @@ function FullReport({ bundle }: { bundle: MockCampaignBundle }) {
         </div>
       )}
 
-      {/* ── Slide 9: Recommendations (Rule engine) ────────────────────── */}
+      {/* ── Slide 9: Recommendations (AI — gated BASE+) ───────────────── */}
       <div className="mt-6">
-        <CampaignRecommendationsSection bundle={bundle} />
+        {hasAi ? (
+          <CampaignRecommendationsSection bundle={bundle} />
+        ) : (
+          <Card className="border-primary/20 bg-primary/5">
+            <CardContent className="flex flex-wrap items-center gap-4 p-6">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary">
+                <Sparkles className="h-6 w-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold">AI Phân tích &amp; Khuyến nghị</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Rule engine phân tích 9 chiều dữ liệu (giới tính, độ tuổi, khu vực, thiết bị, funnel…)
+                  và đưa ra khuyến nghị tối ưu chi phí. Tính năng này yêu cầu gói <b>BASE</b> trở lên.
+                </p>
+              </div>
+              <Button asChild size="sm" data-no-print>
+                <Link href="/pricing">Nâng cấp để mở khóa</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
-      <div className="mt-8 flex items-center justify-between border-t border-border/40 pt-4 text-xs text-muted-foreground">
+      <div className="mt-8 flex items-center justify-between border-t border-border/40 pt-4 text-xs text-muted-foreground" data-no-print>
         <span>
-          Xuất ngày {new Date().toLocaleDateString("vi-VN")} · Biznoco Digital ·
-          act_2158116568288965
+          Xuất ngày {new Date().toLocaleDateString("vi-VN")} · Biznoco Digital
         </span>
         <Button asChild variant="ghost" size="sm">
           <Link href="/campaigns">← Tất cả chiến dịch</Link>

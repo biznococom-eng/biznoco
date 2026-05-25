@@ -11,6 +11,7 @@ import {
   PlugZap,
   Sparkles,
   Loader2,
+  Lock,
 } from "lucide-react";
 import {
   MOCK_CAMPAIGNS_LIST,
@@ -19,18 +20,21 @@ import {
   type MockOverview,
 } from "@/mock/dilinh-campaign";
 import { useCampaigns } from "@/hooks/useCampaigns";
+import { usePlan } from "@/hooks/usePlan";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { fmtCompactVND, fmtCompact, fmtPct } from "@/lib/creative-aggregator";
+import { PLAN_CONFIG } from "@/lib/plan";
 
 export function CampaignsList() {
   const { campaigns: liveCampaigns, isLoading } = useCampaigns(isSupabaseConfigured);
+  const { tier, plan, isLoading: planLoading } = usePlan();
 
   // Khi user có campaigns thật → dùng; nếu trống → fallback mock
   const useMock = liveCampaigns.length === 0;
-  const campaigns = useMemo<MockCampaign[]>(() => {
+  const allCampaigns = useMemo<MockCampaign[]>(() => {
     if (useMock) return MOCK_CAMPAIGNS_LIST;
     return liveCampaigns.map((c) => ({
       id: c.id,
@@ -44,6 +48,14 @@ export function CampaignsList() {
       stop_time: c.stop_time,
     }));
   }, [liveCampaigns, useMock]);
+
+  // Giới hạn số chiến dịch hiển thị theo plan
+  const campaignLimit = plan.campaigns;
+  const campaigns = useMemo(
+    () => campaignLimit === Infinity ? allCampaigns : allCampaigns.slice(0, campaignLimit),
+    [allCampaigns, campaignLimit],
+  );
+  const lockedCount = allCampaigns.length - campaigns.length;
 
   const overviews = MOCK_CAMPAIGNS_OVERVIEW; // TODO: fetch from get_campaign_overview RPC per campaign
 
@@ -96,7 +108,36 @@ export function CampaignsList() {
             overview={overviews[c.id]}
           />
         ))}
+        {/* Locked cards khi vượt plan limit */}
+        {lockedCount > 0 && Array.from({ length: Math.min(lockedCount, 3) }).map((_, i) => (
+          <LockedCampaignCard key={`locked-${i}`} />
+        ))}
       </div>
+
+      {/* Upgrade CTA khi đạt giới hạn plan */}
+      {!planLoading && lockedCount > 0 && (
+        <Card className="mt-4 border-amber-500/30 bg-amber-500/5">
+          <CardContent className="flex flex-wrap items-center gap-3 p-5">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-amber-500/15 text-amber-600">
+              <Lock className="h-5 w-5" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-sm font-bold">
+                Gói {PLAN_CONFIG[tier].label} giới hạn {PLAN_CONFIG[tier].campaigns} chiến dịch
+              </h2>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Bạn còn {lockedCount} chiến dịch bị ẩn. Nâng cấp để mở khóa toàn bộ.
+              </p>
+            </div>
+            <Button asChild size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">
+              <Link href="/pricing">
+                Xem bảng giá
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="mt-6 border-dashed">
         <CardContent className="flex flex-wrap items-start gap-3 p-5">
@@ -222,5 +263,20 @@ function MiniStat({ label, value }: { label: string; value: string }) {
       <span className="text-[10px]">{label}: </span>
       <span className="font-semibold text-foreground tabular-nums">{value}</span>
     </div>
+  );
+}
+
+function LockedCampaignCard() {
+  return (
+    <Link href="/pricing">
+      <Card className="h-full border-dashed opacity-50 transition-opacity hover:opacity-70">
+        <CardContent className="flex h-full min-h-[160px] flex-col items-center justify-center gap-2 p-5 text-center">
+          <Lock className="h-6 w-6 text-muted-foreground" />
+          <p className="text-xs font-medium text-muted-foreground">
+            Nâng cấp để xem chiến dịch này
+          </p>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }

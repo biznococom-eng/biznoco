@@ -13,6 +13,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- dùng cho signInWithPassword/signUp
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -50,31 +51,14 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [errorMsg, setErrorMsg] = useState<string | null>(initialError);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  async function signInWithGoogle() {
-    if (!isSupabaseConfigured) {
-      setStatus("error");
-      setErrorMsg("Chưa cấu hình Supabase trong .env.local");
-      return;
-    }
+  function signInWithGoogle() {
     setGoogleLoading(true);
     setErrorMsg(null);
-    try {
-      const sb = getSupabase();
-      const { error } = await sb.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
-          queryParams: { access_type: "offline", prompt: "consent" },
-        },
-      });
-      if (error) throw error;
-      // Browser tự redirect sang Google — không cần làm gì thêm
-    } catch (err) {
-      setGoogleLoading(false);
-      setStatus("error");
-      const raw = err instanceof Error ? err.message : String(err);
-      setErrorMsg(translateError(raw));
-    }
+    // Redirect sang route /api/auth/google/initiate — Google sẽ hiển thị
+    // "app.biznoco.com" thay vì "zdchzmvonqvxbdbfuufl.supabase.co"
+    window.location.assign(
+      `/api/auth/google/initiate?next=${encodeURIComponent(next)}`,
+    );
   }
 
   const isLogin = mode === "login";

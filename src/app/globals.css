@@ -79,3 +79,39 @@
     background: hsl(var(--border));
   }
 }
+
+/* ── Print / PDF export ─────────────────────────────────────── */
+@media print {
+  /* Ẩn sidebar, topbar, nút PDF, mobile nav */
+  aside,
+  header,
+  [data-no-print],
+  .no-print {
+    display: none !important;
+  }
+
+  /* Đặt main content full width */
+  main, body, html {
+    width: 100% !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Card nền sáng khi in */
+  .card, [class*="bg-card"], [class*="bg-background"] {
+    background: white !important;
+    border-color: #e5e7eb !important;
+  }
+
+  /* Tránh page-break trong card */
+  .card, section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Thêm page-break giữa các section */
+  [data-print-section] {
+    break-before: page;
+    page-break-before: always;
+  }
+}
