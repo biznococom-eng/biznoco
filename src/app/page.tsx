@@ -485,58 +485,60 @@ export default async function LandingPage() {
 function ReportCard() {
   return (
     <div className="relative mx-auto w-full max-w-sm md:max-w-none">
-      {/* Glow behind card */}
       <div className="pointer-events-none absolute inset-0 -m-8 rounded-3xl bg-blue-500/10 blur-[60px]" />
 
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1220]/90 shadow-2xl backdrop-blur-sm">
         {/* Card header */}
-        <div className="flex items-center justify-between border-b border-white/8 px-5 py-3.5">
-          <div className="flex items-center gap-2.5">
-            <div className="flex gap-1">
-              <div className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
-              <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/60" />
-              <div className="h-2.5 w-2.5 rounded-full bg-emerald-500/60" />
+        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex shrink-0 gap-1">
+              <div className="h-2 w-2 rounded-full bg-red-500/60" />
+              <div className="h-2 w-2 rounded-full bg-yellow-500/60" />
+              <div className="h-2 w-2 rounded-full bg-emerald-500/60" />
             </div>
-            <span className="text-xs font-semibold text-white/50">Biznoco — Báo cáo chiến dịch · Tài khoản: Biznoco-01</span>
+            <span className="truncate text-[11px] font-semibold text-white/45">
+              Biznoco · Báo cáo chiến dịch
+            </span>
           </div>
-          <span className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-2.5 py-1 text-[11px] font-bold text-emerald-400">
+          <span className="ml-2 flex shrink-0 items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            ĐANG CHẠY
+            LIVE
           </span>
         </div>
 
-        <div className="px-5 py-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-white/35">
+        {/* Campaign info */}
+        <div className="px-4 py-3">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-white/35">
             Ví dụ báo cáo thực tế
           </p>
-          <h3 className="mt-1 text-2xl font-extrabold text-white">
+          <h3 className="mt-0.5 text-base font-extrabold text-white sm:text-xl">
             Chiến dịch BĐS Di Linh
           </h3>
-          <p className="text-base font-bold text-blue-400">22–24/05/2026</p>
+          <p className="text-xs font-semibold text-blue-400">22–24/05/2026</p>
         </div>
 
         {/* Metric grid */}
-        <div className="grid grid-cols-2 gap-px bg-white/5 mx-5 overflow-hidden rounded-xl mb-4">
+        <div className="grid grid-cols-2 gap-px bg-white/5 mx-4 overflow-hidden rounded-xl mb-3">
           {[
-            { label: "CHI TIÊU", value: "199.483đ", sub: "Ngân sách 100K/ngày", color: "text-blue-400" },
-            { label: "CTR", value: "4,60%", sub: "↑ 4× chuẩn ngành ~1%", color: "text-emerald-400" },
-            { label: "CPC", value: "2.192đ", sub: "↓ 56% vs thị trường", color: "text-cyan-400" },
-            { label: "HỘI THOẠI MESS", value: "10", sub: "19.948đ / hội thoại", color: "text-violet-400" },
+            { label: "CHI TIÊU", value: "199.483đ", sub: "100K/ngày", color: "text-blue-400" },
+            { label: "CTR", value: "4,60%", sub: "↑ 4× ngành ~1%", color: "text-emerald-400" },
+            { label: "CPC", value: "2.192đ", sub: "↓ 56% vs ttị", color: "text-cyan-400" },
+            { label: "MESSENGER", value: "10", sub: "19.948đ / hội thoại", color: "text-violet-400" },
           ].map((m) => (
-            <div key={m.label} className="bg-white/[0.03] p-3.5">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/35">{m.label}</p>
-              <p className={`mt-1 text-2xl font-extrabold tabular-nums ${m.color}`}>{m.value}</p>
-              <p className="mt-0.5 text-[11px] text-white/40">{m.sub}</p>
+            <div key={m.label} className="bg-white/[0.03] p-3">
+              <p className="text-[9px] font-semibold uppercase tracking-wider text-white/35">{m.label}</p>
+              <p className={`mt-0.5 text-lg font-extrabold tabular-nums sm:text-2xl ${m.color}`}>{m.value}</p>
+              <p className="mt-0.5 text-[10px] text-white/40">{m.sub}</p>
             </div>
           ))}
         </div>
 
         {/* CTR by age */}
-        <div className="mx-5 mb-5 rounded-xl border border-white/8 bg-white/[0.02] p-4">
-          <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-white/35">
+        <div className="mx-4 mb-4 rounded-xl border border-white/8 bg-white/[0.02] p-3">
+          <p className="mb-2.5 text-[10px] font-bold uppercase tracking-widest text-white/35">
             CTR theo độ tuổi
           </p>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             {[
               { age: "18–24", pct: 2.90, bar: 28, special: false },
               { age: "25–34", pct: 2.85, bar: 27, special: false },
@@ -546,16 +548,16 @@ function ReportCard() {
               { age: "65+ 👑", pct: 10.53, bar: 100, special: true },
             ].map((row) => (
               <div key={row.age} className="flex items-center gap-2">
-                <span className={`w-20 shrink-0 text-[11px] tabular-nums ${row.special ? "font-bold text-amber-300" : "text-white/45"}`}>
+                <span className={`w-16 shrink-0 text-[10px] tabular-nums ${row.special ? "font-bold text-amber-300" : "text-white/45"}`}>
                   {row.age}
                 </span>
-                <div className="flex-1 overflow-hidden rounded-full bg-white/8 h-2">
+                <div className="flex-1 overflow-hidden rounded-full bg-white/8 h-1.5">
                   <div
-                    className={`h-2 rounded-full transition-all ${row.special ? "bg-gradient-to-r from-amber-400 to-emerald-400" : "bg-blue-500/60"}`}
+                    className={`h-1.5 rounded-full ${row.special ? "bg-gradient-to-r from-amber-400 to-emerald-400" : "bg-blue-500/60"}`}
                     style={{ width: `${row.bar}%` }}
                   />
                 </div>
-                <span className={`w-12 text-right text-[11px] tabular-nums font-semibold ${row.special ? "text-emerald-400" : "text-white/50"}`}>
+                <span className={`w-10 text-right text-[10px] tabular-nums font-semibold ${row.special ? "text-emerald-400" : "text-white/50"}`}>
                   {row.pct.toFixed(2)}%
                 </span>
               </div>
