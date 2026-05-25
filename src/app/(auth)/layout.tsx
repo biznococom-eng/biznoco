@@ -10,7 +10,7 @@ export default function AuthLayout({
       {/* Left: form */}
       <div className="flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
-          <Link href="/" className="mb-8 inline-flex items-center">
+          <Link href="/" className="mb-8 flex justify-center">
             <img
               src="https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"
               alt="Biznoco"
