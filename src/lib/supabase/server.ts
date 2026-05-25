@@ -1,4 +1,5 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -33,3 +34,16 @@ export async function getSupabaseServer() {
 
 export const isSupabaseConfiguredServer =
   Boolean(SUPABASE_URL) && Boolean(SUPABASE_ANON_KEY);
+
+/**
+ * Supabase Admin client dùng Service Role Key — bypass RLS.
+ * Chỉ dùng trong server-side API routes, không bao giờ expose ra client.
+ */
+export function getSupabaseAdmin() {
+  if (!SUPABASE_URL) throw new Error("Thiếu NEXT_PUBLIC_SUPABASE_URL.");
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceKey) throw new Error("Thiếu SUPABASE_SERVICE_ROLE_KEY.");
+  return createClient(SUPABASE_URL, serviceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
