@@ -5,11 +5,13 @@ import {
   BarChart3,
   TrendingUp,
   Zap,
-  Shield,
+  Sparkles,
   ArrowRight,
   CheckCircle2,
-  Play,
-  Users,
+  Eye,
+  Target,
+  DollarSign,
+  Flame,
 } from "lucide-react";
 
 export const metadata = {
@@ -19,7 +21,6 @@ export const metadata = {
 };
 
 export default async function LandingPage() {
-  // Nếu đã đăng nhập → vào dashboard ngay
   if (isSupabaseConfiguredServer) {
     const supabase = await getSupabaseServer();
     const {
@@ -29,245 +30,227 @@ export default async function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080c18] text-white overflow-x-hidden">
-      {/* ── Navbar ─────────────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 border-b border-white/8 bg-[#080c18]/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <Link href="/" className="flex items-center gap-2.5">
+    <div className="min-h-screen overflow-x-hidden bg-[#070b16] text-white antialiased">
+      {/* ─── Navbar ──────────────────────────────────────────── */}
+      <nav className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#070b16]/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6">
+          <Link href="/" className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"
               alt="Biznoco"
-              className="h-8 w-auto"
+              className="h-7 w-auto sm:h-8"
             />
           </Link>
 
-          <div className="hidden items-center gap-6 text-sm font-medium text-white/60 md:flex">
-            <a href="#how-it-works" className="transition-colors hover:text-white">Cách dùng</a>
+          <div className="hidden items-center gap-7 text-sm font-medium text-white/55 md:flex">
+            <a href="#how" className="transition-colors hover:text-white">Cách dùng</a>
             <a href="#features" className="transition-colors hover:text-white">Tính năng</a>
             <a href="#pricing" className="transition-colors hover:text-white">Bảng giá</a>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/login"
-              className="hidden text-sm font-medium text-white/70 transition-colors hover:text-white sm:block"
+              className="hidden text-sm font-medium text-white/65 transition-colors hover:text-white sm:block"
             >
               Đăng nhập
             </Link>
             <Link
               href="/signup"
-              className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/25 sm:px-4"
+              className="rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 px-3.5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-blue-500/40 sm:px-4 sm:py-2.5"
             >
-              <span className="sm:hidden">Dùng miễn phí</span>
-              <span className="hidden sm:inline">Dùng miễn phí →</span>
+              Dùng miễn phí
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-20 pb-24 md:pt-28 md:pb-32">
-        {/* Background glows */}
+      {/* ─── Hero ────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden pb-12 pt-10 sm:pb-20 sm:pt-16 lg:pb-28 lg:pt-20">
+        {/* Ambient glow */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[-15%] top-[-10%] h-[700px] w-[700px] rounded-full bg-blue-600/15 blur-[150px]" />
-          <div className="absolute right-[-10%] top-[20%] h-[500px] w-[500px] rounded-full bg-violet-600/12 blur-[120px]" />
-          <div className="absolute bottom-[-5%] left-[30%] h-[400px] w-[400px] rounded-full bg-cyan-500/8 blur-[100px]" />
+          <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[120px] sm:h-[700px] sm:w-[700px]" />
+          <div className="absolute right-[-20%] top-[10%] h-[400px] w-[400px] rounded-full bg-cyan-500/15 blur-[100px]" />
+          <div className="absolute bottom-0 left-[-10%] h-[350px] w-[350px] rounded-full bg-violet-600/10 blur-[100px]" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-5">
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            {/* Left: text */}
-            <div>
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-10">
+            {/* ─ Hero copy ─ */}
+            <div className="text-center lg:text-left">
               {/* Live badge */}
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 sm:px-4 sm:py-2 sm:text-sm">
-                <span className="relative flex h-2 w-2">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 backdrop-blur-sm sm:mb-6 sm:text-sm">
+                <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 </span>
-                Live data · Meta Marketing API · Real-time
+                Live · Meta Marketing API
               </div>
 
-              <h1 className="text-[2rem] font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
-                Dashboard báo cáo
-                <br />
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-400 bg-clip-text text-transparent">
-                  Facebook Ads
+              <h1 className="mx-auto max-w-xl text-[2.25rem] font-black leading-[1.05] tracking-tight sm:text-5xl lg:mx-0 lg:text-6xl">
+                Báo cáo{" "}
+                <span className="relative inline-block">
+                  <span className="relative bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
+                    Facebook Ads
+                  </span>
                 </span>
                 <br />
-                cho chủ doanh nghiệp
+                tự động, dễ hiểu
               </h1>
 
-              <p className="mt-6 text-lg leading-relaxed text-white/55">
-                Không cần biết về marketing. Biznoco tự phân tích chiến dịch,
-                chỉ ra đâu đang lãng phí tiền và AI đề xuất hành động tối ưu
-                ngay hôm nay.
+              <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-white/55 sm:mt-6 sm:text-lg lg:mx-0">
+                Không cần biết marketing. Biznoco chỉ ra đâu đang lãng phí tiền và AI đề xuất hành động tối ưu ngay hôm nay.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              {/* CTA */}
+              <div className="mt-7 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:gap-4 lg:items-start">
                 <Link
                   href="/signup"
-                  className="group inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-bold text-white shadow-xl shadow-blue-600/30 transition-all hover:bg-blue-500 hover:shadow-blue-500/40 hover:gap-3"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-4 text-base font-bold text-white shadow-2xl shadow-blue-600/40 transition-all hover:shadow-blue-500/60 sm:w-auto sm:py-3.5"
                 >
                   Bắt đầu miễn phí
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
-                  href="/login"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 text-base font-semibold text-white/80 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white"
+                  href="#how"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/5 px-6 py-4 text-base font-semibold text-white/80 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:w-auto sm:py-3.5"
                 >
-                  Đăng nhập
+                  Xem cách dùng
                 </Link>
               </div>
 
-              <div className="mt-10 flex flex-wrap items-center gap-6">
-                {[
-                  { n: "10+", label: "Chiến dịch đã phân tích" },
-                  { n: "4×", label: "CTR so chuẩn ngành" },
-                  { n: "56%", label: "CPC thấp hơn thị trường" },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <div className="text-2xl font-extrabold text-white">{s.n}</div>
-                    <div className="mt-0.5 text-xs text-white/45">{s.label}</div>
-                  </div>
-                ))}
+              {/* Quick proof */}
+              <div className="mt-8 flex items-center justify-center gap-5 text-xs text-white/45 sm:mt-10 sm:justify-start sm:gap-6 sm:text-sm">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                  Không cần thẻ
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                  Setup 2 phút
+                </div>
               </div>
             </div>
 
-            {/* Right: Demo report card */}
+            {/* ─ Hero visual ─ */}
             <div className="relative">
-              <ReportCard />
+              <HeroCard />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Logos / trust bar ──────────────────────────────────────────── */}
-      <section className="border-y border-white/6 bg-white/[0.02] py-6">
-        <div className="mx-auto max-w-7xl px-5">
-          <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-white/25">
-            Dữ liệu từ Meta Marketing API
+      {/* ─── Trust strip ─────────────────────────────────────── */}
+      <section className="border-y border-white/[0.05] bg-white/[0.015] py-5">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <p className="mb-3 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 sm:text-xs">
+            Dữ liệu từ Meta Marketing API chính chủ
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 opacity-40">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 opacity-50 sm:gap-x-8">
             {["Meta Business", "Facebook Ads", "Instagram Ads", "Messenger Ads"].map((p) => (
-              <span key={p} className="text-sm font-bold text-white/60 tracking-wide">{p}</span>
+              <span key={p} className="text-xs font-bold tracking-wide text-white/55 sm:text-sm">
+                {p}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── How it works ───────────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-24">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="mb-14 text-center">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-400">
+      {/* ─── How it works ────────────────────────────────────── */}
+      <section id="how" className="py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-10 text-center sm:mb-14">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-400 sm:text-sm">
               Cách hoạt động
             </p>
-            <h2 className="text-4xl font-extrabold leading-tight tracking-tight">
-              3 bước để có báo cáo
-              <br />
+            <h2 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+              Báo cáo pro,{" "}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-                chuyên nghiệp mỗi ngày
+                trong 3 bước
               </span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-white/50">
+            <p className="mx-auto mt-3 max-w-md text-sm text-white/50 sm:mt-4 sm:max-w-lg sm:text-base">
               Không cần Excel. Không cần agency. Biznoco tự làm tất cả.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
             {[
               {
-                step: "1",
-                title: "Kết nối tài khoản Meta",
-                desc: "Đăng nhập Meta Business, cấp quyền cho Biznoco. Hệ thống tự kéo toàn bộ dữ liệu chiến dịch — chỉ mất 2 phút.",
-                icon: Users,
-                color: "from-blue-500/20 to-blue-600/10 border-blue-500/20",
-                iconColor: "text-blue-400 bg-blue-500/15",
+                step: "01",
+                title: "Kết nối Meta",
+                desc: "Đăng nhập Meta Business, cấp quyền — Biznoco tự kéo toàn bộ dữ liệu chiến dịch trong 2 phút.",
+                accent: "blue" as const,
               },
               {
-                step: "2",
-                title: "Biznoco tự phân tích",
-                desc: "Tự động tính CTR, CPC, CPM, Hook Rate, Hold Rate, ROAS — theo từng creative video & hình ảnh. Cập nhật real-time.",
-                icon: BarChart3,
-                color: "from-violet-500/20 to-violet-600/10 border-violet-500/20",
-                iconColor: "text-violet-400 bg-violet-500/15",
+                step: "02",
+                title: "AI phân tích",
+                desc: "Tự tính Hook Rate, Hold Rate, CTR, CPC, ROAS theo từng creative video & hình ảnh. Real-time.",
+                accent: "violet" as const,
               },
               {
-                step: "3",
-                title: "Báo cáo & tối ưu ngay",
-                desc: "Nhận báo cáo rõ ràng: creative nào đang hiệu quả, cái nào đốt ngân sách. AI gợi ý hành động tối ưu tức thì.",
-                icon: Zap,
-                color: "from-emerald-500/20 to-emerald-600/10 border-emerald-500/20",
-                iconColor: "text-emerald-400 bg-emerald-500/15",
+                step: "03",
+                title: "Hành động",
+                desc: "Biết creative nào nên scale, cái nào nên tắt. AI đưa gợi ý cụ thể — bạn chỉ cần click.",
+                accent: "emerald" as const,
               },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.step}
-                  className={`relative rounded-2xl border bg-gradient-to-br p-7 ${item.color}`}
-                >
-                  <div className="mb-5 flex items-center gap-4">
-                    <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl text-xl font-extrabold ${item.iconColor}`}>
-                      {item.step}
-                    </div>
-                    <div className={`grid h-9 w-9 place-items-center rounded-lg ${item.iconColor}`}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <h3 className="mb-2.5 text-lg font-bold">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-white/55">{item.desc}</p>
-                </div>
-              );
-            })}
+            ].map((item) => (
+              <StepCard key={item.step} {...item} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── Features ───────────────────────────────────────────────────── */}
-      <section id="features" className="py-24 bg-white/[0.015]">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="mb-14 text-center">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-400">
-              Tính năng nổi bật
+      {/* ─── Features (metrics) ──────────────────────────────── */}
+      <section id="features" className="relative py-16 sm:py-24">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-10 text-center sm:mb-14">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-400 sm:text-sm">
+              Phân tích sâu
             </p>
-            <h2 className="text-4xl font-extrabold tracking-tight">
-              Phân tích sâu từng chỉ số
+            <h2 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+              4 chỉ số quyết định
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+                creative thắng hay thua
+              </span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-white/50">
-              Không chỉ xem số — hiểu ý nghĩa từng metric và biết phải làm gì tiếp theo.
-            </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3.5 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
+                icon: Eye,
                 metric: "Hook Rate",
                 value: "72%",
                 delta: "+12%",
-                desc: "Tỷ lệ người xem video tới giây thứ 3. Đo lường sức hút của phần mở đầu creative.",
+                desc: "% người không lướt qua 3 giây đầu",
                 color: "emerald",
               },
               {
+                icon: Target,
                 metric: "Hold Rate",
                 value: "45%",
                 delta: "+8%",
-                desc: "Trong số người vượt 3s, bao nhiêu % xem đến mốc 25%. Đánh giá độ giữ chân nội dung.",
+                desc: "% giữ chân đến mốc 25% video",
                 color: "blue",
               },
               {
+                icon: TrendingUp,
                 metric: "CTR",
-                value: "4.60%",
+                value: "4,6%",
                 delta: "4× ngành",
-                desc: "Tỷ lệ click vào link. Chuẩn ngành ~1%, Biznoco giúp bạn đạt 4× so với đối thủ.",
+                desc: "Click-through rate trên link CTA",
                 color: "cyan",
               },
               {
+                icon: DollarSign,
                 metric: "ROAS",
-                value: "3.8×",
-                delta: "+0.6×",
-                desc: "Return on Ad Spend — doanh thu trên mỗi đồng chi phí quảng cáo. Biết creative nào đáng scale.",
+                value: "3,8×",
+                delta: "+0,6×",
+                desc: "Doanh thu / chi phí quảng cáo",
                 color: "violet",
               },
             ].map((f) => (
@@ -275,108 +258,112 @@ export default async function LandingPage() {
             ))}
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            <FeatureHighlight
-              icon={<TrendingUp className="h-5 w-5" />}
-              title="Funnel Retention chi tiết"
-              desc="Xem chính xác tỷ lệ drop-off tại mỗi mốc 3s → 25% → 50% → 75% → 100% cho từng creative video."
+          {/* Feature highlights */}
+          <div className="mt-10 grid gap-3.5 sm:mt-12 sm:gap-4 md:grid-cols-2">
+            <FeatureRow
+              icon={BarChart3}
+              title="Funnel retention chi tiết"
+              desc="Drop-off tại mỗi mốc 3s → 25% → 50% → 75% → 100% cho từng creative."
               color="blue"
             />
-            <FeatureHighlight
-              icon={<BarChart3 className="h-5 w-5" />}
-              title="CTR theo độ tuổi & giới tính"
-              desc="Phân tích audience nào đang phản hồi tốt nhất với creative của bạn — để target chính xác hơn."
+            <FeatureRow
+              icon={Sparkles}
+              title="AI tối ưu real-time"
+              desc="Phát hiện creative đang waste budget, đề xuất scale, tăng bid hoặc tắt ngay."
               color="violet"
             />
-            <FeatureHighlight
-              icon={<Zap className="h-5 w-5" />}
-              title="AI gợi ý tối ưu real-time"
-              desc="Hệ thống tự phát hiện creative đang waste budget và đề xuất hành động cụ thể: tăng bid, scale, hay tắt."
+            <FeatureRow
+              icon={Flame}
+              title="Audience insights"
+              desc="CTR theo độ tuổi & giới tính — biết nhóm nào đang phản hồi tốt nhất."
               color="amber"
             />
-            <FeatureHighlight
-              icon={<Shield className="h-5 w-5" />}
-              title="Multi-account & xuất PDF"
-              desc="Quản lý nhiều Ad Account, xuất báo cáo PDF chuyên nghiệp để chia sẻ với team hoặc khách hàng."
+            <FeatureRow
+              icon={Zap}
+              title="Multi-account & PDF"
+              desc="Quản lý nhiều Ad Account, xuất báo cáo PDF chuyên nghiệp cho team/khách hàng."
               color="emerald"
             />
           </div>
         </div>
       </section>
 
-      {/* ── Demo report showcase ────────────────────────────────────────── */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
-            <div>
-              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-400">
-                Ví dụ báo cáo thực tế
+      {/* ─── Demo report showcase ────────────────────────────── */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-12">
+            <div className="text-center lg:text-left">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-400 sm:text-sm">
+                Ví dụ thực tế
               </p>
-              <h2 className="text-4xl font-extrabold leading-tight tracking-tight">
+              <h2 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
                 Báo cáo rõ ràng,{" "}
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
                   quyết định nhanh
                 </span>
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-white/55">
-                Không cần chuyên gia marketing. Nhìn vào dashboard là biết ngay:
-                chiến dịch nào hiệu quả, nhóm tuổi nào chuyển đổi tốt nhất,
-                và nên scale hay tắt creative nào.
+              <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/55 sm:text-base lg:mx-0">
+                Nhìn dashboard là biết: chiến dịch nào hiệu quả, nhóm tuổi nào convert tốt, scale hay tắt creative nào.
               </p>
 
-              <ul className="mt-8 space-y-3">
+              <ul className="mx-auto mt-6 max-w-sm space-y-2.5 text-left sm:mt-8 lg:mx-0 lg:max-w-none">
                 {[
-                  "CTR 4,60% — gấp 4× chuẩn ngành ~1%",
-                  "CPC 2.192đ — tiết kiệm 56% so thị trường",
-                  "Nhóm 65+ có CTR cao nhất: 10,53%",
-                  "10 hội thoại Messenger với chi phí 19.948đ/cuộc",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-white/70">
+                  ["CTR 4,60%", "gấp 4× chuẩn ngành ~1%"],
+                  ["CPC 2.192đ", "tiết kiệm 56% so thị trường"],
+                  ["Nhóm 65+", "CTR cao nhất 10,53%"],
+                  ["10 hội thoại", "19.948đ / cuộc Messenger"],
+                ].map(([k, v]) => (
+                  <li key={k} className="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-sm">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-                    {item}
+                    <div>
+                      <span className="font-bold text-white">{k}</span>{" "}
+                      <span className="text-white/55">— {v}</span>
+                    </div>
                   </li>
                 ))}
               </ul>
 
               <Link
                 href="/signup"
-                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-bold text-white shadow-xl shadow-blue-600/30 transition-all hover:bg-blue-500"
+                className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-3.5 text-base font-bold text-white shadow-xl shadow-blue-600/30 transition-all hover:shadow-blue-500/50"
               >
                 Tạo báo cáo của tôi
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
 
-            {/* Detailed report card */}
             <div className="relative">
-              <DetailedReportCard />
+              <DetailReport />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Pricing ────────────────────────────────────────────────────── */}
-      <section id="pricing" className="py-24 bg-white/[0.015]">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="mb-14 text-center">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-400">
+      {/* ─── Pricing ─────────────────────────────────────────── */}
+      <section id="pricing" className="py-16 sm:py-24">
+        <div className="pointer-events-none absolute inset-x-0 bg-gradient-to-b from-transparent via-blue-500/[0.03] to-transparent" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-10 text-center sm:mb-14">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-400 sm:text-sm">
               Bảng giá
             </p>
-            <h2 className="text-4xl font-extrabold tracking-tight">
-              Bắt đầu miễn phí, nâng cấp khi cần
+            <h2 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+              Bắt đầu miễn phí,
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+                nâng cấp khi cần
+              </span>
             </h2>
-            <p className="mt-4 text-base text-white/50">
-              Mọi gói đều có quyền truy cập dashboard & báo cáo cơ bản.
-            </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
+          <div className="mx-auto grid max-w-md gap-4 sm:gap-5 md:max-w-none md:grid-cols-3 md:items-stretch">
             {[
               {
                 name: "Free",
-                price: "Miễn phí",
+                price: "0₫",
+                period: "mãi mãi",
                 highlight: false,
-                features: ["1 chiến dịch phân tích", "Dashboard cơ bản", "Báo cáo 7 ngày"],
+                features: ["1 chiến dịch", "Dashboard cơ bản", "Báo cáo 7 ngày"],
                 cta: "Bắt đầu miễn phí",
                 href: "/signup",
               },
@@ -385,8 +372,8 @@ export default async function LandingPage() {
                 price: "$29",
                 period: "/tháng",
                 highlight: true,
-                badge: "Phổ biến nhất",
-                features: ["10 chiến dịch", "Lưu lịch sử", "Xuất PDF", "AI gợi ý", "Hỗ trợ email"],
+                badge: "Phổ biến",
+                features: ["10 chiến dịch", "Lưu lịch sử 12 tháng", "Xuất PDF", "AI gợi ý", "Hỗ trợ email"],
                 cta: "Dùng thử 14 ngày",
                 href: "/signup",
               },
@@ -395,7 +382,7 @@ export default async function LandingPage() {
                 price: "$79",
                 period: "/tháng",
                 highlight: false,
-                features: ["Không giới hạn", "Multi-account", "Hỗ trợ ưu tiên", "API access", "White-label"],
+                features: ["Không giới hạn", "Multi-account", "API access", "White-label", "Hỗ trợ ưu tiên"],
                 cta: "Liên hệ",
                 href: "mailto:hello@biznoco.com",
               },
@@ -406,42 +393,42 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ── Final CTA ──────────────────────────────────────────────────── */}
-      <section className="py-24">
-        <div className="mx-auto max-w-3xl px-5 text-center">
-          <div className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-600/15 via-cyan-500/8 to-violet-600/10 px-8 py-16">
+      {/* ─── Final CTA ───────────────────────────────────────── */}
+      <section className="px-4 pb-16 sm:px-6 sm:pb-24">
+        <div className="mx-auto max-w-4xl">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-blue-600/20 via-cyan-500/10 to-violet-600/20 px-6 py-12 text-center sm:rounded-[2rem] sm:px-10 sm:py-16">
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute left-[10%] top-[-20%] h-[300px] w-[300px] rounded-full bg-blue-500/20 blur-[80px]" />
-              <div className="absolute right-[10%] bottom-[-20%] h-[250px] w-[250px] rounded-full bg-violet-500/15 blur-[70px]" />
+              <div className="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/30 blur-[100px]" />
+              <div className="absolute bottom-0 right-0 h-[200px] w-[200px] rounded-full bg-violet-500/30 blur-[80px]" />
             </div>
 
             <div className="relative">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-sm font-medium text-white/70">
-                <Play className="h-3.5 w-3.5 fill-current text-blue-400" />
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-3.5 py-1.5 text-xs font-semibold text-white/75 sm:text-sm">
+                <Sparkles className="h-3.5 w-3.5 text-blue-300" />
                 Miễn phí · Không cần thẻ tín dụng
               </div>
-              <h2 className="text-4xl font-extrabold leading-tight tracking-tight">
-                Bắt đầu phân tích
+              <h2 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+                Phân tích Facebook Ads
                 <br />
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-400 bg-clip-text text-transparent">
-                  Facebook Ads ngay hôm nay
+                <span className="bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
+                  ngay hôm nay
                 </span>
               </h2>
-              <p className="mt-4 text-base text-white/50">
-                Tham gia cùng các chủ doanh nghiệp đang dùng Biznoco để tối ưu ngân sách quảng cáo.
+              <p className="mx-auto mt-4 max-w-md text-sm text-white/55 sm:text-base">
+                Tham gia cùng các chủ doanh nghiệp đang dùng Biznoco để tối ưu ngân sách.
               </p>
 
-              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <div className="mt-7 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:justify-center sm:gap-4">
                 <Link
                   href="/signup"
-                  className="group inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-2xl shadow-blue-600/40 transition-all hover:bg-blue-500 hover:gap-3"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4 text-base font-bold text-white shadow-2xl shadow-blue-600/50 transition-all hover:shadow-blue-500/70 sm:w-auto"
                 >
                   Tạo tài khoản miễn phí
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
                   href="/login"
-                  className="text-sm font-medium text-white/50 hover:text-white transition-colors"
+                  className="text-sm font-medium text-white/55 transition-colors hover:text-white"
                 >
                   Đã có tài khoản? Đăng nhập →
                 </Link>
@@ -451,11 +438,11 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ── Footer ─────────────────────────────────────────────────────── */}
-      <footer className="border-t border-white/8 py-10">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Link href="/" className="flex items-center gap-2">
+      {/* ─── Footer ──────────────────────────────────────────── */}
+      <footer className="border-t border-white/[0.06] py-8 sm:py-10">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+            <Link href="/" className="flex items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"
@@ -463,15 +450,12 @@ export default async function LandingPage() {
                 className="h-7 w-auto opacity-70"
               />
             </Link>
-            <p className="text-xs text-white/30">
-              © 2026 Biznoco. Dashboard báo cáo Facebook Ads cho chủ doanh nghiệp Việt.
+            <p className="text-xs text-white/35 sm:text-sm">
+              © 2026 Biznoco · Dashboard Facebook Ads
             </p>
-            <div className="flex items-center gap-5 text-xs text-white/40">
-              <a href="mailto:hello@biznoco.com" className="hover:text-white transition-colors">
-                hello@biznoco.com
-              </a>
-              <Link href="/login" className="hover:text-white transition-colors">Đăng nhập</Link>
-              <Link href="/signup" className="hover:text-white transition-colors">Đăng ký</Link>
+            <div className="flex items-center gap-4 text-xs text-white/45 sm:text-sm">
+              <a href="mailto:hello@biznoco.com" className="hover:text-white">hello@biznoco.com</a>
+              <Link href="/login" className="hover:text-white">Đăng nhập</Link>
             </div>
           </div>
         </div>
@@ -480,158 +464,141 @@ export default async function LandingPage() {
   );
 }
 
-/* ── Sub-components ─────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────── */
+/* Sub-components                                               */
+/* ─────────────────────────────────────────────────────────── */
 
-function ReportCard() {
+function HeroCard() {
   return (
-    <div className="relative mx-auto w-full max-w-sm md:max-w-none">
-      <div className="pointer-events-none absolute inset-0 -m-8 rounded-3xl bg-blue-500/10 blur-[60px]" />
+    <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+      {/* Glow */}
+      <div className="pointer-events-none absolute inset-0 -m-6 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-violet-500/15 blur-3xl" />
 
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1220]/90 shadow-2xl backdrop-blur-sm">
-        {/* Card header */}
-        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
-          <div className="flex min-w-0 items-center gap-2">
-            <div className="flex shrink-0 gap-1">
-              <div className="h-2 w-2 rounded-full bg-red-500/60" />
-              <div className="h-2 w-2 rounded-full bg-yellow-500/60" />
-              <div className="h-2 w-2 rounded-full bg-emerald-500/60" />
-            </div>
-            <span className="truncate text-[11px] font-semibold text-white/45">
-              Biznoco · Báo cáo chiến dịch
-            </span>
+      <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] shadow-2xl backdrop-blur-md">
+        {/* Browser-like header */}
+        <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-3">
+          <div className="flex gap-1.5">
+            <div className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
+            <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
+            <div className="h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
           </div>
-          <span className="ml-2 flex shrink-0 items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            LIVE
-          </span>
+          <div className="ml-2 flex flex-1 items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 text-[10px] text-white/40">
+            <span className="text-emerald-400">●</span>
+            biznoco.com/dashboard
+          </div>
         </div>
 
-        {/* Campaign info */}
-        <div className="px-4 py-3">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-white/35">
-            Ví dụ báo cáo thực tế
+        {/* Campaign title */}
+        <div className="px-5 pb-2 pt-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-300/80">
+            Chiến dịch · 22–24/05
           </p>
-          <h3 className="mt-0.5 text-base font-extrabold text-white sm:text-xl">
-            Chiến dịch BĐS Di Linh
+          <h3 className="mt-1.5 text-xl font-black leading-tight text-white sm:text-2xl">
+            BĐS Di Linh — Video Hook
           </h3>
-          <p className="text-xs font-semibold text-blue-400">22–24/05/2026</p>
         </div>
 
-        {/* Metric grid */}
-        <div className="grid grid-cols-2 gap-px bg-white/5 mx-4 overflow-hidden rounded-xl mb-3">
+        {/* Hero KPI */}
+        <div className="mx-5 mt-3 rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 p-4">
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-300/80">
+                CTR
+              </p>
+              <p className="mt-0.5 text-4xl font-black tabular-nums text-emerald-300 sm:text-5xl">
+                4,60<span className="text-2xl sm:text-3xl">%</span>
+              </p>
+            </div>
+            <div className="rounded-lg bg-emerald-500/20 px-2.5 py-1 text-[11px] font-bold text-emerald-300">
+              ↑ 4× ngành
+            </div>
+          </div>
+          <p className="mt-2 text-[11px] text-white/45">
+            Chuẩn ngành ~1% · bạn đang ở top performer
+          </p>
+        </div>
+
+        {/* 3 mini metrics */}
+        <div className="mx-5 mt-3 grid grid-cols-3 gap-2">
           {[
-            { label: "CHI TIÊU", value: "199.483đ", sub: "100K/ngày", color: "text-blue-400" },
-            { label: "CTR", value: "4,60%", sub: "↑ 4× ngành ~1%", color: "text-emerald-400" },
-            { label: "CPC", value: "2.192đ", sub: "↓ 56% vs ttị", color: "text-cyan-400" },
-            { label: "MESSENGER", value: "10", sub: "19.948đ / hội thoại", color: "text-violet-400" },
+            { label: "Chi tiêu", value: "199K", color: "text-blue-300" },
+            { label: "CPC", value: "2.192đ", color: "text-cyan-300" },
+            { label: "Mess", value: "10", color: "text-violet-300" },
           ].map((m) => (
-            <div key={m.label} className="bg-white/[0.03] p-3">
-              <p className="text-[9px] font-semibold uppercase tracking-wider text-white/35">{m.label}</p>
-              <p className={`mt-0.5 text-lg font-extrabold tabular-nums sm:text-2xl ${m.color}`}>{m.value}</p>
-              <p className="mt-0.5 text-[10px] text-white/40">{m.sub}</p>
+            <div
+              key={m.label}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.025] px-2.5 py-2.5"
+            >
+              <p className="text-[9px] font-bold uppercase tracking-wider text-white/40">
+                {m.label}
+              </p>
+              <p className={`mt-0.5 text-sm font-black tabular-nums ${m.color} sm:text-base`}>
+                {m.value}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* CTR by age */}
-        <div className="mx-4 mb-4 rounded-xl border border-white/8 bg-white/[0.02] p-3">
-          <p className="mb-2.5 text-[10px] font-bold uppercase tracking-widest text-white/35">
-            CTR theo độ tuổi
-          </p>
+        {/* CTR by age — beautiful bars */}
+        <div className="m-5 mt-4 rounded-2xl border border-white/[0.06] bg-black/30 p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+              CTR theo độ tuổi
+            </p>
+            <Flame className="h-3.5 w-3.5 text-amber-400" />
+          </div>
           <div className="space-y-2">
             {[
-              { age: "18–24", pct: 2.90, bar: 28, special: false },
-              { age: "25–34", pct: 2.85, bar: 27, special: false },
-              { age: "35–44", pct: 3.29, bar: 31, special: false },
-              { age: "45–54 🔥", pct: 6.18, bar: 59, special: true },
-              { age: "55–64", pct: 4.41, bar: 42, special: false },
-              { age: "65+ 👑", pct: 10.53, bar: 100, special: true },
-            ].map((row) => (
-              <div key={row.age} className="flex items-center gap-2">
-                <span className={`w-16 shrink-0 text-[10px] tabular-nums ${row.special ? "font-bold text-amber-300" : "text-white/45"}`}>
-                  {row.age}
+              { age: "18–24", pct: 2.9, bar: 28, hot: false },
+              { age: "25–34", pct: 2.85, bar: 27, hot: false },
+              { age: "35–44", pct: 3.29, bar: 31, hot: false },
+              { age: "45–54", pct: 6.18, bar: 59, hot: true },
+              { age: "55–64", pct: 4.41, bar: 42, hot: false },
+              { age: "65+", pct: 10.53, bar: 100, hot: true, top: true },
+            ].map((r) => (
+              <div key={r.age} className="flex items-center gap-2.5">
+                <span
+                  className={`w-10 shrink-0 text-[10px] font-bold tabular-nums ${
+                    r.top ? "text-amber-300" : r.hot ? "text-amber-200/80" : "text-white/45"
+                  }`}
+                >
+                  {r.age}
                 </span>
-                <div className="flex-1 overflow-hidden rounded-full bg-white/8 h-1.5">
+                <div className="relative flex-1 overflow-hidden rounded-full bg-white/[0.04]">
                   <div
-                    className={`h-1.5 rounded-full ${row.special ? "bg-gradient-to-r from-amber-400 to-emerald-400" : "bg-blue-500/60"}`}
-                    style={{ width: `${row.bar}%` }}
+                    className={`h-1.5 rounded-full ${
+                      r.top
+                        ? "bg-gradient-to-r from-amber-400 via-orange-300 to-emerald-400"
+                        : r.hot
+                        ? "bg-gradient-to-r from-amber-400 to-amber-300"
+                        : "bg-gradient-to-r from-blue-500 to-cyan-500"
+                    }`}
+                    style={{ width: `${r.bar}%` }}
                   />
                 </div>
-                <span className={`w-10 text-right text-[10px] tabular-nums font-semibold ${row.special ? "text-emerald-400" : "text-white/50"}`}>
-                  {row.pct.toFixed(2)}%
+                <span
+                  className={`w-12 text-right text-[10px] font-bold tabular-nums ${
+                    r.top ? "text-emerald-300" : "text-white/55"
+                  }`}
+                >
+                  {r.pct.toFixed(2)}%
                 </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DetailedReportCard() {
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1220]/90 shadow-2xl">
-      <div className="pointer-events-none absolute inset-0 -m-4 bg-violet-500/8 blur-[50px]" />
-      <div className="relative">
-        <div className="border-b border-white/8 px-5 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs text-white/40">Chiến dịch · Tháng 5/2026</p>
-              <p className="text-base font-bold text-white">BĐS Di Linh — Video Hook</p>
-            </div>
-            <span className="rounded-lg bg-blue-500/15 px-2.5 py-1 text-xs font-bold text-blue-400">ĐANG CHẠY</span>
-          </div>
-        </div>
-
-        {/* KPI tiles */}
-        <div className="grid grid-cols-3 gap-px bg-white/5 mx-5 mt-4 overflow-hidden rounded-xl">
-          {[
-            { label: "Hook Rate", value: "72%", color: "text-emerald-400", bg: "bg-emerald-500/10" },
-            { label: "Hold Rate", value: "45%", color: "text-blue-400", bg: "bg-blue-500/10" },
-            { label: "Completion", value: "12%", color: "text-violet-400", bg: "bg-violet-500/10" },
-          ].map((k) => (
-            <div key={k.label} className={`${k.bg} py-4 text-center`}>
-              <p className={`text-2xl font-extrabold ${k.color}`}>{k.value}</p>
-              <p className="mt-0.5 text-[10px] text-white/40">{k.label}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Retention funnel */}
-        <div className="m-5 rounded-xl border border-white/8 bg-white/[0.02] p-4">
-          <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-white/35">
-            Retention Funnel
-          </p>
-          <div className="space-y-2">
-            {[
-              { label: "Impressions", pct: 100, color: "bg-white/20" },
-              { label: "3s View (Hook)", pct: 72, color: "bg-emerald-500" },
-              { label: "25% View", pct: 45, color: "bg-blue-500" },
-              { label: "50% View", pct: 31, color: "bg-violet-500" },
-              { label: "75% View", pct: 19, color: "bg-amber-500" },
-              { label: "100% View", pct: 12, color: "bg-red-500" },
-            ].map((row) => (
-              <div key={row.label} className="flex items-center gap-2.5">
-                <span className="w-28 shrink-0 text-[10px] text-white/40">{row.label}</span>
-                <div className="flex-1 overflow-hidden rounded-full bg-white/5 h-2">
-                  <div className={`h-2 rounded-full ${row.color}`} style={{ width: `${row.pct}%` }} />
-                </div>
-                <span className="w-8 text-right text-[10px] font-semibold tabular-nums text-white/60">{row.pct}%</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* AI insight */}
-        <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-violet-500/20 bg-violet-500/10 p-3.5">
-          <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-violet-500/30 text-sm">
-            🤖
+        <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 to-blue-500/5 p-3">
+          <div className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-violet-500/20 text-sm">
+            ✨
           </div>
-          <div>
-            <p className="text-[11px] font-bold text-violet-300">AI Gợi ý tối ưu</p>
-            <p className="mt-0.5 text-[11px] leading-relaxed text-white/50">
-              Hook rate 72% xuất sắc. Scale ngân sách ×2 cho creative này — ROAS 3.8× đang rất tốt. Nhóm 65+ đang convert mạnh.
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-violet-300">
+              AI gợi ý
+            </p>
+            <p className="mt-0.5 text-[11px] leading-relaxed text-white/65">
+              Nhóm 65+ convert mạnh — scale ngân sách ×2 cho audience này ngay.
             </p>
           </div>
         </div>
@@ -640,72 +607,265 @@ function DetailedReportCard() {
   );
 }
 
-function MetricCard({
-  metric, value, delta, desc, color,
+function StepCard({
+  step,
+  title,
+  desc,
+  accent,
 }: {
-  metric: string; value: string; delta: string; desc: string; color: string;
+  step: string;
+  title: string;
+  desc: string;
+  accent: "blue" | "violet" | "emerald";
 }) {
-  const colors: Record<string, string> = {
-    emerald: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    blue: "border-blue-500/20 bg-blue-500/5 text-blue-400",
-    cyan: "border-cyan-500/20 bg-cyan-500/5 text-cyan-400",
-    violet: "border-violet-500/20 bg-violet-500/5 text-violet-400",
+  const colorMap = {
+    blue: {
+      border: "border-blue-500/25 hover:border-blue-400/40",
+      bg: "from-blue-500/15 to-blue-500/[0.02]",
+      text: "text-blue-300",
+      glow: "shadow-blue-500/10",
+    },
+    violet: {
+      border: "border-violet-500/25 hover:border-violet-400/40",
+      bg: "from-violet-500/15 to-violet-500/[0.02]",
+      text: "text-violet-300",
+      glow: "shadow-violet-500/10",
+    },
+    emerald: {
+      border: "border-emerald-500/25 hover:border-emerald-400/40",
+      bg: "from-emerald-500/15 to-emerald-500/[0.02]",
+      text: "text-emerald-300",
+      glow: "shadow-emerald-500/10",
+    },
   };
-  const c = colors[color] ?? colors.blue;
+  const c = colorMap[accent];
+
   return (
-    <div className={`rounded-2xl border p-5 ${c.split(" ")[0]} bg-white/[0.03]`}>
-      <div className="mb-4 flex items-center justify-between">
-        <span className="text-xs font-bold uppercase tracking-widest text-white/40">{metric}</span>
-        <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${c.split(" ").slice(1).join(" ")}`}>
-          {delta}
-        </span>
+    <div
+      className={`group relative overflow-hidden rounded-3xl border bg-gradient-to-br p-6 shadow-xl transition-all sm:p-7 ${c.border} ${c.bg} ${c.glow}`}
+    >
+      <div className={`mb-4 text-5xl font-black tabular-nums ${c.text} opacity-80 sm:text-6xl`}>
+        {step}
       </div>
-      <p className={`text-3xl font-extrabold tabular-nums ${c.split(" ")[2]}`}>{value}</p>
-      <p className="mt-3 text-xs leading-relaxed text-white/45">{desc}</p>
+      <h3 className="text-lg font-bold text-white sm:text-xl">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/55 sm:text-[15px]">{desc}</p>
     </div>
   );
 }
 
-function FeatureHighlight({
-  icon, title, desc, color,
+function MetricCard({
+  icon: Icon,
+  metric,
+  value,
+  delta,
+  desc,
+  color,
 }: {
-  icon: React.ReactNode; title: string; desc: string; color: string;
+  icon: typeof Eye;
+  metric: string;
+  value: string;
+  delta: string;
+  desc: string;
+  color: string;
 }) {
-  const colors: Record<string, string> = {
-    blue: "bg-blue-500/10 text-blue-400 border-blue-500/15",
-    violet: "bg-violet-500/10 text-violet-400 border-violet-500/15",
-    amber: "bg-amber-500/10 text-amber-400 border-amber-500/15",
-    emerald: "bg-emerald-500/10 text-emerald-400 border-emerald-500/15",
+  const colors: Record<string, { border: string; bg: string; text: string; chip: string }> = {
+    emerald: {
+      border: "border-emerald-500/20",
+      bg: "from-emerald-500/10 to-emerald-500/[0.02]",
+      text: "text-emerald-300",
+      chip: "bg-emerald-500/15 text-emerald-300",
+    },
+    blue: {
+      border: "border-blue-500/20",
+      bg: "from-blue-500/10 to-blue-500/[0.02]",
+      text: "text-blue-300",
+      chip: "bg-blue-500/15 text-blue-300",
+    },
+    cyan: {
+      border: "border-cyan-500/20",
+      bg: "from-cyan-500/10 to-cyan-500/[0.02]",
+      text: "text-cyan-300",
+      chip: "bg-cyan-500/15 text-cyan-300",
+    },
+    violet: {
+      border: "border-violet-500/20",
+      bg: "from-violet-500/10 to-violet-500/[0.02]",
+      text: "text-violet-300",
+      chip: "bg-violet-500/15 text-violet-300",
+    },
   };
   const c = colors[color] ?? colors.blue;
   return (
-    <div className="flex gap-5 rounded-2xl border border-white/8 bg-white/[0.02] p-5">
-      <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${c}`}>
-        {icon}
+    <div className={`relative rounded-2xl border bg-gradient-to-br p-5 ${c.border} ${c.bg}`}>
+      <div className="mb-3 flex items-center justify-between">
+        <div className={`grid h-9 w-9 place-items-center rounded-xl ${c.chip}`}>
+          <Icon className="h-4 w-4" />
+        </div>
+        <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${c.chip}`}>
+          {delta}
+        </span>
       </div>
-      <div>
-        <h3 className="font-bold text-white">{title}</h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-white/50">{desc}</p>
+      <p className={`text-3xl font-black tabular-nums ${c.text} sm:text-4xl`}>{value}</p>
+      <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-white/35">
+        {metric}
+      </p>
+      <p className="mt-2 text-xs leading-relaxed text-white/50">{desc}</p>
+    </div>
+  );
+}
+
+function FeatureRow({
+  icon: Icon,
+  title,
+  desc,
+  color,
+}: {
+  icon: typeof Eye;
+  title: string;
+  desc: string;
+  color: string;
+}) {
+  const colors: Record<string, string> = {
+    blue: "bg-blue-500/15 text-blue-300 border-blue-500/20",
+    violet: "bg-violet-500/15 text-violet-300 border-violet-500/20",
+    amber: "bg-amber-500/15 text-amber-300 border-amber-500/20",
+    emerald: "bg-emerald-500/15 text-emerald-300 border-emerald-500/20",
+  };
+  const c = colors[color] ?? colors.blue;
+  return (
+    <div className="flex items-start gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04]">
+      <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl border ${c}`}>
+        <Icon className="h-5 w-5" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-base font-bold text-white sm:text-lg">{title}</h3>
+        <p className="mt-1 text-sm leading-relaxed text-white/55">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+function DetailReport() {
+  return (
+    <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+      <div className="pointer-events-none absolute inset-0 -m-6 rounded-[2rem] bg-gradient-to-br from-violet-500/15 via-blue-500/10 to-cyan-500/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] shadow-2xl backdrop-blur-md">
+        <div className="border-b border-white/[0.06] px-5 py-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40">
+                Creative · Tháng 5/2026
+              </p>
+              <p className="mt-0.5 truncate text-base font-bold text-white sm:text-lg">
+                Video Hook · BĐS Di Linh
+              </p>
+            </div>
+            <span className="shrink-0 rounded-lg bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold text-emerald-300">
+              ● LIVE
+            </span>
+          </div>
+        </div>
+
+        {/* KPI tiles */}
+        <div className="mx-5 mt-4 grid grid-cols-3 gap-2">
+          {[
+            { label: "Hook", value: "72%", color: "text-emerald-300", bg: "from-emerald-500/15" },
+            { label: "Hold", value: "45%", color: "text-blue-300", bg: "from-blue-500/15" },
+            { label: "Done", value: "12%", color: "text-violet-300", bg: "from-violet-500/15" },
+          ].map((k) => (
+            <div
+              key={k.label}
+              className={`rounded-xl bg-gradient-to-br to-transparent p-3 text-center ${k.bg}`}
+            >
+              <p className={`text-2xl font-black tabular-nums sm:text-3xl ${k.color}`}>
+                {k.value}
+              </p>
+              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wider text-white/40">
+                {k.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Funnel */}
+        <div className="m-5 rounded-2xl border border-white/[0.06] bg-black/30 p-4">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-white/40">
+            Retention Funnel
+          </p>
+          <div className="space-y-2">
+            {[
+              { label: "Impressions", pct: 100, color: "from-white/30 to-white/10" },
+              { label: "3s View", pct: 72, color: "from-emerald-500 to-emerald-400" },
+              { label: "25% View", pct: 45, color: "from-blue-500 to-blue-400" },
+              { label: "50% View", pct: 31, color: "from-violet-500 to-violet-400" },
+              { label: "75% View", pct: 19, color: "from-amber-500 to-amber-400" },
+              { label: "100% View", pct: 12, color: "from-red-500 to-red-400" },
+            ].map((r) => (
+              <div key={r.label} className="flex items-center gap-2.5">
+                <span className="w-20 shrink-0 text-[10px] text-white/45">{r.label}</span>
+                <div className="relative flex-1 overflow-hidden rounded-full bg-white/[0.04]">
+                  <div
+                    className={`h-1.5 rounded-full bg-gradient-to-r ${r.color}`}
+                    style={{ width: `${r.pct}%` }}
+                  />
+                </div>
+                <span className="w-9 text-right text-[10px] font-bold tabular-nums text-white/65">
+                  {r.pct}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* AI insight */}
+        <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 to-violet-500/[0.02] p-3">
+          <div className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-violet-500/25 text-sm">
+            ✨
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-violet-300">
+              AI gợi ý tối ưu
+            </p>
+            <p className="mt-0.5 text-[11px] leading-relaxed text-white/65">
+              Hook 72% xuất sắc — scale ngân sách ×2. ROAS 3,8× đang rất tốt.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 function PricingCard({
-  name, price, period, highlight, badge, features, cta, href,
+  name,
+  price,
+  period,
+  highlight,
+  badge,
+  features,
+  cta,
+  href,
 }: {
-  name: string; price: string; period?: string; highlight?: boolean; badge?: string;
-  features: string[]; cta: string; href: string;
+  name: string;
+  price: string;
+  period?: string;
+  highlight?: boolean;
+  badge?: string;
+  features: string[];
+  cta: string;
+  href: string;
 }) {
   return (
-    <div className={`relative flex flex-col rounded-2xl border p-7 ${
-      highlight
-        ? "border-blue-500/40 bg-blue-600/8 shadow-xl shadow-blue-500/10 ring-1 ring-blue-500/20"
-        : "border-white/10 bg-white/[0.03]"
-    }`}>
+    <div
+      className={`relative flex flex-col rounded-3xl border p-6 sm:p-7 ${
+        highlight
+          ? "border-blue-400/50 bg-gradient-to-br from-blue-600/15 via-cyan-500/8 to-blue-600/10 shadow-2xl shadow-blue-500/20 ring-1 ring-blue-400/30 md:scale-[1.03]"
+          : "border-white/[0.08] bg-white/[0.025]"
+      }`}
+    >
       {badge && (
-        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-          <span className="rounded-full bg-blue-600 px-3 py-1 text-xs font-bold text-white">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span className="rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-500/40">
             {badge}
           </span>
         </div>
@@ -713,16 +873,20 @@ function PricingCard({
 
       <div className="mb-5">
         <h3 className="text-lg font-bold text-white">{name}</h3>
-        <div className="mt-3 flex items-end gap-1">
-          <span className="text-3xl font-extrabold text-white">{price}</span>
-          {period && <span className="mb-1 text-sm text-white/40">{period}</span>}
+        <div className="mt-2 flex items-baseline gap-1">
+          <span className="text-4xl font-black tracking-tight text-white sm:text-5xl">
+            {price}
+          </span>
+          {period && <span className="text-sm text-white/40">{period}</span>}
         </div>
       </div>
 
       <ul className="mb-6 flex-1 space-y-2.5">
         {features.map((f) => (
-          <li key={f} className="flex items-center gap-2.5 text-sm text-white/65">
-            <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+          <li key={f} className="flex items-start gap-2.5 text-sm text-white/70">
+            <CheckCircle2
+              className={`mt-0.5 h-4 w-4 shrink-0 ${highlight ? "text-blue-300" : "text-emerald-400"}`}
+            />
             {f}
           </li>
         ))}
@@ -730,10 +894,10 @@ function PricingCard({
 
       <Link
         href={href}
-        className={`rounded-xl py-3 text-center text-sm font-bold transition-all ${
+        className={`rounded-2xl py-3.5 text-center text-sm font-bold transition-all ${
           highlight
-            ? "bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-600/30"
-            : "border border-white/15 text-white/70 hover:bg-white/8 hover:text-white"
+            ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/40 hover:shadow-blue-500/60"
+            : "border border-white/15 text-white/80 hover:bg-white/8 hover:text-white"
         }`}
       >
         {cta}
