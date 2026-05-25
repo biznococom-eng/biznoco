@@ -83,7 +83,7 @@ export function Topbar() {
           <Popover>
             <PopoverTrigger asChild>
               <button className="flex items-center gap-2 rounded-md border border-border/40 bg-card/50 px-2 py-1.5 transition-colors hover:bg-accent/40">
-                <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-xs font-bold text-white">
+                <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-xs font-bold text-white">
                   {initial}
                 </div>
                 <div className="hidden text-left sm:block">

@@ -36,7 +36,7 @@ export function OverviewCards({ metrics }: OverviewCardsProps) {
       value: fmtCompactVND(metrics.total_spend),
       sub: `${fmtCompact(metrics.total_impressions)} impressions`,
       icon: Wallet,
-      accent: "from-violet-500/30 to-fuchsia-500/20",
+      accent: "from-blue-500/30 to-cyan-500/20",
     },
     {
       label: "Hook Rate (TB)",
@@ -92,7 +92,7 @@ export function OverviewCards({ metrics }: OverviewCardsProps) {
       value: metrics.blended_roas.toFixed(2) + "×",
       sub: `${fmtCompactVND(metrics.total_purchase_value)} doanh thu`,
       icon: TrendingUp,
-      accent: "from-pink-500/30 to-rose-500/20",
+      accent: "from-teal-500/30 to-cyan-500/20",
       badge: {
         label:
           metrics.blended_roas >= 3

@@ -177,7 +177,7 @@ function ReportCover({ campaign }: { campaign: MockCampaignBundle["campaign"] })
     : new Date().toLocaleDateString("vi-VN");
 
   return (
-    <Card className="relative overflow-hidden border-primary/30 bg-gradient-to-br from-violet-950/50 via-card to-fuchsia-950/40">
+    <Card className="relative overflow-hidden border-primary/30 bg-gradient-to-br from-blue-950/50 via-card to-teal-950/40">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(800px_400px_at_20%_30%,hsl(290_84%_50%/0.25),transparent_60%),radial-gradient(600px_300px_at_80%_70%,hsl(248_84%_60%/0.22),transparent_60%)]" />
       <CardContent className="grid gap-8 p-8 md:grid-cols-[1fr_auto] md:p-12">
         <div>

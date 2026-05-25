@@ -42,8 +42,8 @@ export function CampaignGenderSection({ rows }: Props) {
           <GenderCard
             type="female"
             row={female}
-            iconBg="from-pink-500/30 to-rose-500/20"
-            iconColor="text-pink-300"
+            iconBg="from-teal-500/30 to-cyan-500/20"
+            iconColor="text-teal-300"
           />
         </div>
 

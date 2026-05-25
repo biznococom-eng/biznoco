@@ -22,7 +22,7 @@ export default function AuthLayout({
       </div>
 
       {/* Right: marketing */}
-      <div className="relative hidden overflow-hidden bg-gradient-to-br from-violet-950 via-background to-fuchsia-950 lg:block">
+      <div className="relative hidden overflow-hidden bg-gradient-to-br from-blue-950 via-background to-teal-950 lg:block">
         <div className="absolute inset-0 bg-[radial-gradient(800px_500px_at_30%_30%,hsl(290_84%_50%/0.35),transparent_60%),radial-gradient(600px_400px_at_70%_70%,hsl(248_84%_50%/0.3),transparent_60%)]" />
         <div className="relative z-10 flex h-full flex-col justify-between p-12">
           <div>
@@ -34,7 +34,7 @@ export default function AuthLayout({
             </div>
             <h2 className="mt-8 max-w-md text-3xl font-bold leading-tight tracking-tight">
               Phân tích Creative Facebook Ads<br />
-              <span className="bg-gradient-to-r from-violet-300 via-fuchsia-300 to-pink-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
                 thông minh hơn
               </span>
             </h2>

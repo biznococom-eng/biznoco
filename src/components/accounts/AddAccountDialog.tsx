@@ -99,7 +99,7 @@ export function AddAccountDialog({ open, onClose, onCreated }: AddAccountDialogP
         </button>
         <CardContent className="p-6">
           <div className="mb-4 flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 text-white">
+            <div className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 text-white">
               <Wallet2 className="h-5 w-5" />
             </div>
             <div>

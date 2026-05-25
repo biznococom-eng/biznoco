@@ -69,7 +69,7 @@ export function AccountsManager() {
       {!isLoading && !error && accounts.length === 0 && (
         <Card>
           <CardContent className="grid place-items-center py-16 text-center">
-            <div className="mb-3 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20">
+            <div className="mb-3 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
               <Wallet2 className="h-7 w-7 text-primary" />
             </div>
             <h2 className="text-lg font-semibold">Chưa kết nối account nào</h2>

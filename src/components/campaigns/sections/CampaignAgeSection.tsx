@@ -68,7 +68,7 @@ export function CampaignAgeSection({ rows }: Props) {
                     <div className="text-[10px] text-muted-foreground">Spend</div>
                     <div className="mt-0.5 h-2 w-full overflow-hidden rounded-full bg-secondary/40">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500"
+                        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-500"
                         style={{ width: `${widthSpend}%` }}
                       />
                     </div>

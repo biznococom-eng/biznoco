@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 240 50% 5%;
+    --background: 220 45% 5%;
     --foreground: 0 0% 96%;
 
-    --card: 240 30% 9%;
+    --card: 220 30% 9%;
     --card-foreground: 0 0% 96%;
 
-    --popover: 240 30% 11%;
+    --popover: 220 28% 11%;
     --popover-foreground: 0 0% 96%;
 
-    --primary: 250 84% 67%;
+    --primary: 215 85% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 20% 16%;
+    --secondary: 220 18% 16%;
     --secondary-foreground: 0 0% 92%;
 
-    --muted: 240 20% 16%;
-    --muted-foreground: 240 8% 65%;
+    --muted: 220 18% 16%;
+    --muted-foreground: 215 10% 64%;
 
-    --accent: 240 25% 18%;
+    --accent: 220 22% 18%;
     --accent-foreground: 0 0% 96%;
 
     --destructive: 0 70% 60%;
@@ -32,11 +32,11 @@
     --success-foreground: 0 0% 100%;
 
     --warning: 38 92% 55%;
-    --warning-foreground: 240 50% 5%;
+    --warning-foreground: 220 45% 5%;
 
-    --border: 240 20% 21%;
-    --input: 240 20% 18%;
-    --ring: 250 84% 67%;
+    --border: 220 18% 21%;
+    --input: 220 18% 18%;
+    --ring: 215 85% 62%;
 
     --radius: 0.75rem;
   }
@@ -58,9 +58,9 @@
 
   body {
     background-image:
-      radial-gradient(900px 600px at 10% -10%, hsl(248 90% 60% / 0.18), transparent 60%),
-      radial-gradient(800px 500px at 110% 10%, hsl(290 80% 60% / 0.13), transparent 60%),
-      radial-gradient(700px 700px at 50% 110%, hsl(190 80% 60% / 0.08), transparent 60%);
+      radial-gradient(900px 600px at 10% -10%, hsl(215 90% 60% / 0.18), transparent 60%),
+      radial-gradient(800px 500px at 110% 10%, hsl(171 80% 50% / 0.13), transparent 60%),
+      radial-gradient(700px 700px at 50% 110%, hsl(190 80% 55% / 0.08), transparent 60%);
     background-attachment: fixed;
   }
 

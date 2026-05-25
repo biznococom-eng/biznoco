@@ -83,7 +83,7 @@ export function CampaignDeviceSection({ devices, platforms }: Props) {
                     <div
                       className={`h-full rounded-full ${
                         /instagram/i.test(p.value)
-                          ? "bg-gradient-to-r from-fuchsia-500 to-pink-500"
+                          ? "bg-gradient-to-r from-cyan-500 to-teal-500"
                           : "bg-gradient-to-r from-blue-500 to-cyan-500"
                       }`}
                       style={{ width: `${p.spend_share}%` }}

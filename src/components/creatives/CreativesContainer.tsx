@@ -90,8 +90,8 @@ export function CreativesContainer() {
     return (
       <div className="mx-auto w-full max-w-3xl px-4 py-16 md:px-8 md:py-24">
         <Card className="overflow-hidden">
-          <div className="border-b border-border/40 bg-gradient-to-br from-violet-500/10 via-fuchsia-500/5 to-pink-500/10 p-8 text-center">
-            <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-violet-500/40">
+          <div className="border-b border-border/40 bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-teal-500/10 p-8 text-center">
+            <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 shadow-lg shadow-blue-500/40">
               <Wallet2 className="h-7 w-7 text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">
