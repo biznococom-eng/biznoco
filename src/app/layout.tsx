@@ -1,11 +1,26 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
 
 export const metadata: Metadata = {
-  title: "Biznoco — AI Marketing Suite",
+  title: {
+    default: "Biznoco — Creative Analytics cho Facebook Ads",
+    template: "%s · Biznoco",
+  },
   description:
-    "Biznoco: bao cao Facebook Ads, trich xuat dataset, chatbot AI ban hang. Cong cu Marketing AI cho doanh nghiep Viet.",
+    "Phân tích Hook Rate, Hold Rate, ROAS theo từng creative Facebook Ads. SaaS dành cho marketer & chủ doanh nghiệp Việt.",
+  icons: {
+    icon: "https://biznoco.com/wp-content/uploads/2026/04/Biznoco-1.png",
+    apple: "https://biznoco.com/wp-content/uploads/2026/04/Biznoco-1.png",
+  },
+  openGraph: {
+    title: "Biznoco — Creative Analytics cho Facebook Ads",
+    description:
+      "Hook Rate, Hold Rate, ROAS — biết ngay creative nào đáng scale.",
+    locale: "vi_VN",
+    type: "website",
+    images: ["https://biznoco.com/wp-content/uploads/2026/04/Logo-biznoco-ngang-1.png"],
+  },
 };
 
 export default function RootLayout({
@@ -24,10 +39,8 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div className="shell">
-          <Sidebar />
-          <main className="main">{children}</main>
-        </div>
+        {children}
+        <Analytics />
       </body>
     </html>
   );
